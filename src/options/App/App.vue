@@ -11,12 +11,15 @@
         <router-view />
       </div>
     </div>
+    <span @click="onClick">点击</span>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue'
 import Sidebar from '@/components/SideBar.vue'
+import { connect } from './Socket.io'
+// import { Socket } from 'socket.io-client';
 
 export default {
   name: 'OptionsApp',
@@ -24,7 +27,49 @@ export default {
     Header,
     Sidebar,
   },
+  mounted() {
+    // this.$socket.on('open', (client) => {
+    //   console.log('Connected to the WebSocket server');
+    //   socket.send(JSON.stringify({
+    //     event: 'hello',
+    //     data: 'Hello from client',
+    //   }));
+    // });
+
+    // this.$socket.on('message', (data) => {
+    //   console.log('Message from server: ', data.toString());
+    // });
+
+    // this.$socket.on('close', () => {
+    //   console.log('Disconnected from the WebSocket server');
+    // });
+
+    // this.$socket.on('error', (error) => {
+    //   console.error('WebSocket error: ', error);
+    // });
+
+    // this.$socket.on('socketTest3', (data) => {
+    //     console.log(data,'w2w22') // { test: 测试数据}
+    // });
+    // this.$socket.connect((res) => {
+    //   console.log(res,this.$socket.disconnected,this.$socket); //连接socket服务器
+    // });
+
+    connect()
+  },
+  methods: {
+    onClick() {
+      window.socket.emit('socketTest', { test: '测试数据' }, (data) => {
+        console.log(data)
+      })
+
+      // this.$socket.emit('socketTest_Broadcast','socketTest_Broadcast',(data)=>{
+      //     console.log(data)
+      // });
+    },
+  },
 }
+
 </script>
 
 <style>

@@ -64,6 +64,7 @@
         v-else
         description="暂无网站"
       />
+      <Calendar />
     </div>
     <AddStopDialog
       :visible="visibleStop"
@@ -89,12 +90,14 @@
 import AddStopDialog from './sStopDialog.vue'
 import AddCheerDialog from './sCheerDialog.vue'
 import AddSetDialog from './sSetDialog.vue'
+import Calendar from '../kalendarScene/Calendar.vue'
 
 export default {
   components: {
     AddStopDialog,
     AddCheerDialog,
     AddSetDialog,
+    Calendar,
   },
   data() {
     return {

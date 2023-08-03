@@ -2,12 +2,13 @@ import VueRouter from 'vue-router'
 import Vue from 'vue'
 import stopScenePage from './stopScene/index.vue'
 import focusScenePage from './focusScene/index.vue'
+import kalendarScenePage from './kalendarScene/index.vue'
 
 Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/stop',
+    redirect: '/kalendar',
   },
   {
     path: '/stop',
@@ -18,6 +19,11 @@ const routes = [
     path: '/focus',
     name: 'focusScenePage',
     component: focusScenePage,
+  },
+  {
+    path: '/kalendar',
+    name: 'kalendarScenePage',
+    component: kalendarScenePage,
   },
 ]
 

@@ -9,10 +9,20 @@ import AppComponent from './App/App.vue'
 import router from './App/router'
 import store from './App/store'
 
+// import SocketioPlugin from "./App/Socket.io.plugin";
+
 Vue.component('app-component', AppComponent)
 Vue.use(GlobalFunction)
 Vue.use(ElementUI)
 Vue.prototype.NET = NET
+
+// Vue.use(SocketioPlugin, {
+//   connection: "http://localhost:8010/",
+//   options: {
+//     autoConnect: false, //关闭自动连接
+//     // ...其它选项
+//   },
+// });
 
 // eslint-disable-next-line no-new
 new Vue({

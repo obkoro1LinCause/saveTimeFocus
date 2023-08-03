@@ -43,6 +43,7 @@
     "dayjs": "^1.10.7",
     "element-ui": "2.15.7",
     "file-loader": "^6.2.0",
+    "socket.io-client": "^4.7.1",
     "vue": "^2.6.10",
     "vue-router": "^3.5.2",
     "vuex": "^4.1.0"
