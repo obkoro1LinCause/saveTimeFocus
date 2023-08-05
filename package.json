@@ -1,25 +1,9 @@
 {
-  "name": "stop-mess-around",
-  "description": "减少摸鱼的时间和频率的浏览器插件：提醒你正在摸鱼，摸鱼的时候知道自己在摸鱼，提高我们上班和学习的效率，节省时间用于学习提升自己或者享受生活",
-  "version": "2.1.2",
-  "publisher": "OBKoro1",
-  "homepage": "https://github.com/OBKoro1/stop-mess-around",
-  "license": "MIT",
-  "author": {
-    "name": "OBKoro1",
-    "email": "obkoro1@foxmail.com",
-    "url": "http://obkoro1.com/web_accumulate/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/OBKoro1/stop-mess-around"
-  },
-  "bugs": {
-    "url": "https://github.com/OBKoro1/stop-mess-around/issues",
-    "email": "obkoro1@foxmail.com"
-  },
+  "name": "project-ts",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "serve:chrome": "node deploy.js development && cross-env NODE_ENV=serve ENV_PATH=serveChrome vue-cli-service build-watch",
+    "serve:chrome": "node deploy.js development && cross-env NODE_ENV=serve ENV_PATH=serveChrome vue-cli-service build --watch",
     "serve:fireFox": "node deploy.js development fireFox && cross-env NODE_ENV=serve ENV_PATH=serveFireFox vue-cli-service build-watch",
     "plugin:chrome": "node deploy.js production && cross-env NODE_ENV=production ENV_PATH=productionChrome vue-cli-service build",
     "plugin:Edg": "node deploy.js production && cross-env NODE_ENV=production ENV_PATH=productionEdge vue-cli-service build",
@@ -32,54 +16,35 @@
     "prepare": "husky install",
     "analyze": "npm run build --report"
   },
-  "lint-staged": {
-    "src/**/*.{js,vue}": [
-      "npm run lint",
-      "git add"
-    ]
-  },
   "dependencies": {
-    "core-js": "^2.6.5",
-    "dayjs": "^1.10.7",
-    "element-ui": "2.15.7",
-    "file-loader": "^6.2.0",
-    "socket.io-client": "^4.7.1",
-    "vue": "^2.6.10",
-    "vue-router": "^3.5.2",
-    "vuex": "^4.1.0"
+    "babel-plugin-component": "^1.1.1",
+    "core-js": "^3.32.0",
+    "dayjs": "^1.11.9",
+    "element-ui": "^2.15.13",
+    "vue": "^3.2.13",
+    "vue-router": "^4.0.3",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^12.1.4",
-    "@commitlint/config-conventional": "^12.1.4",
-    "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-plugin-eslint": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-component": "^1.1.1",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-plugin-typescript": "~5.0.0",
+    "@vue/cli-plugin-vuex": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@vue/eslint-config-typescript": "^9.1.0",
     "copy-webpack-plugin": "^4.6.0",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
     "dotenv-expand": "^8.0.3",
-    "eslint": "^5.16.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-plugin-import": "^2.23.2",
-    "eslint-plugin-vue": "^5.0.0",
-    "husky": "^6.0.0",
-    "lint-staged": "^11.0.0",
-    "npm-pack-zip": "^1.3.0",
-    "vue-cli-plugin-chrome-ext": "0.0.5",
-    "vue-template-compiler": "^2.5.21",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "sass": "^1.32.7",
+    "sass-loader": "^12.0.0",
+    "typescript": "~4.5.5",
     "webpack-bundle-analyzer": "^4.4.2",
     "zip-webpack-plugin": "^3.0.0"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+  }
 }

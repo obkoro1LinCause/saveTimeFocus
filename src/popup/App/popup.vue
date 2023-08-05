@@ -1,26 +1,21 @@
 <template>
   <div class="box-card">
-    <div @click="utils.jumpUrl(NET.OPTIONSPAGE)">
-      <div>
-        <i class="el-icon-setting" />
-      </div>
+    <div>
       <span>管理面板</span>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue'
 
-export default {
-  name: 'Popup',
-  data() {
-    return {
-    }
+export default defineComponent({
+  setup() {
+    
   },
-
-  methods: {},
-}
+})
 </script>
+
 
 <style scoped>
 .box-card {
