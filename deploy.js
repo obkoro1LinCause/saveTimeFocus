@@ -14,7 +14,7 @@ function run() {
 
 // 修改element的引用地址 使element icon在其他网站上可用
 function elementFont() {
-  const elementPath = path.resolve(__dirname, './node_modules/element-ui/lib/theme-chalk/', 'index.css')
+  const elementPath = path.resolve(__dirname, './node_modules/element-plus/theme-chalk/', 'index.css')
   let content = fs.readFileSync(elementPath).toString()
   // 替换匹配到的每个变量
   const reg = /url\(.*?fonts\/element-icons\./g

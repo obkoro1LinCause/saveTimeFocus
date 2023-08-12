@@ -12,6 +12,8 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    '@typescript-eslint/no-unused-vars':'off',
+    '@typescript-eslint/no-var-requires':'off',
     'no-async-promise-executor':'off',
     'no-undef':'off',
     '@typescript-eslint/no-empty-function':'off',

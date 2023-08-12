@@ -1,7 +1,7 @@
 <template>
   <div class="box-card">
     <div>
-      <span>管理面板</span>
+      <span @click="utils.jumpUrl(NET.OPTIONSPAGE)">管理面板</span>
     </div>
   </div>
 </template>

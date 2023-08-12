@@ -1,6 +1,6 @@
 {
-  "name": "project-ts",
-  "version": "0.1.0",
+  "name": "save-time-focus",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "serve:chrome": "node deploy.js development && cross-env NODE_ENV=serve ENV_PATH=serveChrome vue-cli-service build --watch",
@@ -17,15 +17,17 @@
     "analyze": "npm run build --report"
   },
   "dependencies": {
+    "axios": "^1.4.0",
     "babel-plugin-component": "^1.1.1",
     "core-js": "^3.32.0",
     "dayjs": "^1.11.9",
-    "element-ui": "^2.15.13",
+    "element-plus": "^2.3.9",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.243",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
     "@vue/cli-plugin-babel": "~5.0.0",

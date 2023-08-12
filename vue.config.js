@@ -4,7 +4,6 @@ const webpackBundleAnalyzer = require('webpack-bundle-analyzer')
 const path = require('path')
 const dotenv = require('dotenv')
 const dotenvExpand = require('dotenv-expand')
-const { defineConfig } = require('@vue/cli-service')
 
 const envPath = {
   productionChrome: './config/env/.env.productionChrome',
@@ -27,7 +26,7 @@ const chromeName = ['popup', 'options']
 
 chromeName.forEach((name) => {
   pagesObj[name] = {
-    entry: `src/${name}/index.js`,
+    entry: `src/${name}/index.ts`,
     template: 'public/index.html',
     filename: `${name}.html`,
   }
@@ -35,8 +34,6 @@ chromeName.forEach((name) => {
 
 // 生成manifest文件
 const mode = process.env.VUE_APP_MODE.toLowerCase()
-
-console.log('process.env.VUE_APP_MODE',process.env.VUE_APP_MODE)
 const manifest = {
   from: path.resolve('./manifest/manifest.production.json'),
   to: `${path.resolve('dist')}/manifest.json`,
@@ -69,10 +66,9 @@ if (process.env.NODE_ENV !== 'serve') {
   )
 }
 
-module.exports = defineConfig({
-  // transpileDependencies: true,
+module.exports = {
   pages: pagesObj,
-  // 生产环境是否生成 sourceMap 文件
+  // // 生产环境是否生成 sourceMap 文件
   productionSourceMap: false,
   configureWebpack: {
     devtool: 'inline-source-map',
@@ -117,4 +113,4 @@ module.exports = defineConfig({
         .use(webpackBundleAnalyzer.BundleAnalyzerPlugin)
     }
   },
-})
+}

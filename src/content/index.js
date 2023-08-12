@@ -5,12 +5,13 @@ import './content-global.css'
 
 
 
-const id = `app_vue_${Date.now()}`
-const root = document.createElement('div')
-root.id = id
-document.body.appendChild(root)
+const id = `app_vue_${Date.now()}`;
+const root = document.createElement('div');
+root.id = id;
+document.body.appendChild(root);
 
-const app = createApp(App).mount(`#${id}`);
+const app = createApp(App);
+app.mount(`#${id}`);
 
 
 

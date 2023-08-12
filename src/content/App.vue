@@ -1,13 +1,17 @@
 <template>
-  <div class="stop-mess-around-content" />
+  <div class="stop-mess-around-content">
+    content
+  </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   setup() {
     
   },
-}
+})
 </script>
 
 <style>
