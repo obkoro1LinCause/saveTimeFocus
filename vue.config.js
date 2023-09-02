@@ -68,7 +68,6 @@ if (process.env.NODE_ENV !== 'serve') {
 
 module.exports = {
   pages: pagesObj,
-  // // 生产环境是否生成 sourceMap 文件
   productionSourceMap: false,
   configureWebpack: {
     devtool: 'inline-source-map',
@@ -80,13 +79,15 @@ module.exports = {
       filename: '[name].js',
     },
     plugins,
+    resolve: {
+      alias: {
+        'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js'
+      }
+    },
   },
   css: {
     extract: {
-      // https://www.cnblogs.com/mmzuo-798/p/14333897.html
-      // MiniCssExtractPlugin.loader 更改css引用地址
       filename: 'css/[name].css',
-      // chunkFilename: 'css/[name].css'
     },
   },
 

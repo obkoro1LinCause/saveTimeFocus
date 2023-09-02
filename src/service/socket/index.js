@@ -12,7 +12,7 @@ function connect() {
   socket = io(serverUrl, options)
   window.socket = socket
 
-  socket.connect()
+  socket.connect();
 
   socket.on('connect', () => {
     console.log(socket.connected) // true
@@ -79,4 +79,9 @@ window.addEventListener('offline', () => {
   }
 })
 
-export { connect }
+export { connect };
+
+
+
+
+// ----------------------------------------------------

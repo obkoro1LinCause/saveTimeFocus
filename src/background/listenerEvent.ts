@@ -19,6 +19,12 @@ class ListenerEvent {
         utils.jumpUrl(NET.OPTIONSPAGE)
       }
     });
+    
+    // chrome.runtime.onMessage.addListener(function (msg, sender, response) {
+    //   console.log(msg, sender);
+    //   response();
+    // });
+    
   }
 }
 export default new ListenerEvent();

@@ -17,17 +17,6 @@ export const utils = {
     chrome.tabs.create({url});
   },
    /**
-   * @description 获取不同语言的方法
-   * @param * name 获取chrome的language数据
-   * @param * zh 还没同步到language 临时使用汉字
-   */
-   getLanguageMessage(name:string,zh:string) {
-    if (zh) {
-      return zh
-    }
-    return chrome.i18n.getMessage(name)
-  },
-   /**
    * @description 获取storage数据
    * @param * key
    */
@@ -68,9 +57,9 @@ export const utils = {
 }
 
 export default {
-  install: (app:App, options:any) => {
+  install: (app:App, options?:any) => {
     app.config.globalProperties.NET = NET;
-    app.config.globalProperties.utils = utils;
+    app.config.globalProperties.$utils = utils;
     console.log("我的第一个插件",options);
   }
 };

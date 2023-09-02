@@ -1,5 +1,5 @@
 <template>
-    <div class="register-box">
+    <div class="register-box color">
         <el-form
             label-position="right"
             label-width="100px"

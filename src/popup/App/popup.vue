@@ -1,19 +1,15 @@
 <template>
   <div class="box-card">
     <div>
-      <span @click="utils.jumpUrl(NET.OPTIONSPAGE)">管理面板</span>
+      <span @click="$utils.jumpUrl(NET.OPTIONSPAGE)"> {{tm('name')}}</span>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import { useI18n } from 'vue-i18n';
+const { tm } = useI18n();
 
-export default defineComponent({
-  setup() {
-    
-  },
-})
 </script>
 
 
