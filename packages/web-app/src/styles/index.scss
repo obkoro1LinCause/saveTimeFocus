@@ -1,0 +1,275 @@
+@use './element/index.scss';
+
+html,body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    transition: color 300ms, background-color 300ms;
+}
+
+html[theme='white-mode']{
+    filter: invert(0%) hue-rotate(180deg);
+
+}
+
+html[theme='dark-mode']{
+    filter: invert(85%) hue-rotate(180deg);
+}
+
+html {
+    -webkit-locale: auto;
+    box-sizing: border-box
+}
+body {
+    background: #fff;
+    line-height: 1
+}
+
+:root {
+    --color-black-08: rgba(0,0,0,.88);
+    --color-black-07: rgba(0,0,0,.66);
+    --color-black-06: rgba(0,0,0,.45);
+    --color-black-05: rgba(0,0,0,.24);
+    --color-black-04: rgba(0,0,0,.14);
+    --color-black-03: rgba(0,0,0,.08);
+    --color-black-02: rgba(0,0,0,.05);
+    --color-black-01: rgba(0,0,0,.02);
+    --color-grey-01: #fafafa;
+    --color-grey-02: #f2f2f2;
+    --color-grey-03: #ebebeb;
+    --color-grey-04: #dedede;
+    --color-grey-05: #c2c2c2;
+    --color-grey-06: #999;
+    --color-grey-07: #575757;
+    --color-grey-08: #1f1f1f;
+    --color-red-01: #fdf4f3;
+    --color-red-02: #fbe3e0;
+    --color-red-03: #ee5244;
+    --color-red-04: #e44232;
+    --color-red-06: #d1453b;
+    --color-blue-01: #f1f7fe;
+    --color-blue-02: #e2f0ff;
+    --color-blue-03: #3879fa;
+    --color-blue-04: #316fea;
+    --color-blue-06: #2064ca;
+    --color-beige-01: #fcf8f3;
+    --color-beige-02: #efebe6;
+    --color-beige-03: #eae5de;
+    --color-green-01: #f6f9f7;
+    --color-green-02: #d2e0da;
+    --color-green-03: #c7d4cf;
+    --color-green-04: #6b8767;
+    --color-gold-01: #faf6eb;
+    --color-gold-02: #efe0b9;
+    --color-gold-03: #e3cf91;
+    --color-gold-04: #f7b84f;
+    --color-yellow-03: #fffcf0;
+    --color-yellow-04: #ffd669;
+    --color-linkedin: #0077b5;
+    --color-facebook: #1877f2;
+    --color-twitter: #1da1f2;
+    --color-youtube: red;
+    --color-instagram: #e145a5;
+    --color-base-white: #fff;
+    --color-base-black: #000;
+    --color-td-primary: #e44232;
+    --color-td-secondary-dark: #fae8d6;
+    --color-td-secondary-mid: #fff5eb;
+    --color-td-secondary-light: #fff9f3;
+    --color-td-cta-active: #d1453b;
+    --color-td-cta-hover: #ee5244;
+    --color-tw-primary: #316fea;
+    --color-tw-secondary-dark: #dce7e4;
+    --color-tw-secondary-mid: #f0f7f5;
+    --color-tw-secondary-light: #f6f9f8;
+    --color-tw-cta-active: #2a61cf;
+    --color-tw-cta-hover: #3879fa;
+    --color-dst-primary: #438952;
+    --color-dst-secondary-dark: #f3ecd1;
+    --color-dst-secondary-light: #fefbf1;
+    --color-dst-cta-active: #4f7d54;
+    --color-dst-cta-hover: #539359;
+    --color-perceptional-green: #6b8767;
+    --color-perceptional-yellow: #ffc93e;
+    --color-perceptional-pink: #ffada4;
+    --radius-sm: 2.5px;
+    --radius-md: 4px;
+    --space-2: 0.125rem;
+    --space-4: 0.25rem;
+    --space-8: 0.5rem;
+    --space-12: 0.75rem;
+    --space-16: 1rem;
+    --space-24: 1.5rem;
+    --space-32: 2rem;
+    --space-40: 2.5rem;
+    --space-48: 3rem;
+    --space-64: 4rem;
+    --space-96: 6rem;
+    --space-128: 8rem;
+    --space-160: 10rem;
+    --space-192: 12rem;
+    --space-240: 15rem;
+    --space-304: 19rem;
+    --z-index-sticky: 100;
+    --z-index-popup: 5000;
+    --z-index-dialog: 6000;
+    --z-index-dropdown: 7000;
+    --z-index-overlay: 8000;
+    --z-index-modal: 9000;
+    --z-index-toast: 10000;
+    --animation-ease-base: cubic-bezier(0.2,0.8,0.2,1);
+    --animation-ease-in-out: cubic-bezier(0.8,0.14,0.14,0.8);
+    --animation-duration-50: 50ms;
+    --animation-duration-150: 150ms;
+    --animation-duration-350: 350ms;
+    --animation-duration-600: 600ms;
+    --animation-duration-850: 850ms;
+    --animation-duration-1000: 1000ms;
+    --shadow-grey: rgba(0,0,0,.08);
+    --shadow-color: rgba(0,0,0,.24);
+    --shadow-xs: 0 2px 4px rgba(0,0,0,.04);
+    --shadow-sm: 0 2px 7px 0 rgba(0,0,0,.12);
+    --shadow-md: 0px 3px 20px rgba(0,0,0,.15);
+    --shadow-xl: 0px 4px 64px rgba(0,0,0,.35);
+    --shadow-lg: 0 2px 6px 0 rgba(0,0,0,.06),0 7px 15px 0 rgba(0,0,0,.12);
+    --shadow-hover: 0 6px 24px 0px rgba(0,0,0,.24);
+    --shadow-focus-xs: 0px 2px 7px rgba(0,0,0,.14);
+    --shadow-focus: 0 0 0 1px #1f60c2,0 0 0 4px #dceaff;
+    --shadow-focus-error: 0 0 0 1px #d1453b,0 0 0 4px #fbdad7;
+    --tw-drop-shadow: drop-shadow(0px 5px 20px rgba(0,0,0,.15)) drop-shadow(0px 0px 96px rgba(49,111,234,.2));
+    --tw-shadow-lg: 0px 5px 20px rgba(0,0,0,.15),0px 0px 96px rgba(49,111,234,.2);
+    --shadow-elevated: 0px 1px 19px 0px rgba(42,29,48,.06),0px 0px 48px 0px hsla(30,78%,91%,.6);
+    --shadow-focusvisible-default: 0 0 0 1px #1f60c2,0 0 0 4px #dceafe;
+    --shadow-focusvisible-error: 0 0 0 1px #d1453b,0 0 0 4px #fbdad7;
+    --shadow-selectable-control: 0px 1px 5px 0px rgba(42,29,48,.11),0px 0px 0px 1px rgba(42,29,48,.04);
+    --shadow-overlay: 0 10px 48px rgba(42,29,48,.18),0 14px 19px -9px rgba(42,29,48,.06);
+    --dispaly-flex:flex;
+    --flex-row:row;
+    --flex-column:column;
+    --m-1:2px;
+    --m-2:4px;
+    --m-3:6px;
+    --m-4:8px;
+    --m-5:10px;
+    --m-6:12px;
+    --m-7:14px;
+    --m-8:16px;
+    --m-9:18px;
+    --m-10:20px;
+    --m-12:24px;
+    --icon-xl: 24px;
+    --icon-lg: 20px;
+    --icon-base: 18px;
+    --icon-sm: 16px;
+    --icon-xs: 14px
+}
+
+
+:root .focusTheme {
+    --theme-color:var(--color-base-white);
+}
+
+
+:root .twistTheme {
+    --theme-color:var(--color-base-black);
+}
+#app {
+    height: 100%;
+}
+// 夜模式
+.twistTheme {
+    width: 100%;
+    height: 100%;
+}
+// 白模式
+.focusTheme {
+    width: 100%;
+    height: 100%;
+
+}
+
+.flex{
+    display: var(--dispaly-flex);
+    flex-direction: var(--flex-row);
+}
+
+.flex-column{
+    display: var(--flex);
+    flex-direction: var(--flex-column)
+}
+
+.cursor{
+    cursor: pointer;
+}
+
+.ml-1{
+    margin-left:var(--m-1);
+}
+.ml-2{
+    margin-left: var(--m-2);
+}
+.ml-3{
+    margin-left:var(--m-3);
+}
+.ml-4{
+    margin-left:var(--m-4);
+}
+.ml-5{
+    margin-left: var(--m-5);
+}
+.ml-6{
+    margin-left: var(--m-6);
+}
+.ml-7{
+    margin-left:var(--m-7);
+}
+.ml-8{
+    margin-left:var(--m-8);
+}
+.ml-9{
+    margin-left: var(--m-9);
+}
+.ml-10{
+    margin-left:var(--m-10);
+}
+.ml-12{
+    margin-left: var(--m-12);
+}
+
+.mr-1{
+    margin-right:var(--m-1);
+}
+.mr-2{
+    margin-right: var(--m-2);
+}
+.mr-3{
+    margin-right: var(--m-3);
+}
+
+.mr-4{
+    margin-right:var(--m-4);
+}
+.mr-5{
+    margin-right: var(--m-5);
+}
+.mr-6{
+    margin-right: var(--m-6);
+}
+.mr-7{
+    margin-right:var(--m-7);
+}
+.mr-8{
+    margin-right: var(--m-8);
+}
+.mr-9{
+    margin-right: var(--m-9);
+}
+.mr-10{
+    margin-right:var(--m-10);
+}
+.mr-12{
+    margin-right: var(--m-12);
+}
+
+
