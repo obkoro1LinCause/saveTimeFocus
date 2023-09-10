@@ -4,10 +4,16 @@
         <div class="app-header">app侧面导航</div>
         <div class="app-body">
             <div class="body-sidebar">
-                <TSideBar :config="TSidebarConfig"></TSideBar>
+                <TSideBar 
+                    v-model=sidebarLists
+                    @click-plan="onClickPlan"
+                    @add-plan="onClickPlanAdd"
+                    @add-tag="onClickTagAdd"
+                    @add-folder="onClickFolderAdd"
+                ></TSideBar>
             </div>
             <div class="body-content">
-                内容
+                <RouterView></RouterView>
             </div>
         </div>
     </div>
@@ -15,15 +21,74 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
-import { TSidebarConfig } from './type/sidebar';
-import { TSideBar,type TypeSideBar } from '@bs/component';
+import { RouterLink, RouterView, useRoute, useRouter} from 'vue-router';
+import { TSideBar, TypeSideBar } from '@bs/component';
 
-const TSidebarConfig = ref<TypeSideBar>([
+
+const { ListEnum,PlanEnum,TypeConfigs} = TypeSideBar
+
+const router = useRouter();
+const sidebarLists = ref<TypeSideBar.TypeConfigs>([
     {
-        label:'',
+        name:'今天',
+        id:'today',
+        listType:TypeSideBar.Intelligent
+    },
+    {
+        name:'明天',
+        id:'tomorrow',
+    },
+    {
+        name:'本周',
+        id:'week',
+    },
+    {
+        name:'高优先级',
+        id:'high_priority',
+    },
+    {
+        name:'中优先级',
+        id:'medium_priority',
+    },
+    {
+        name:'低优先级',
+        id:'low_priority',
+    },
+    {
+        name:'树',
+        id:'low_priority_t',
+        children:[
+            {
+                name:'树11',
+                id:'low_priority_t1',
+            },
+            {
+                name:'树22',
+                id:'low_priority_t2',
+            },
+            {
+                name:'树33',
+                id:'low_priority_t3',
+            }
+        ]
     }
-])
+]);
+
+const onClickPlan = (item:any)=>{
+    console.log(item,'---item---',router)
+    const { routeId } = item;
+    router.push(`/app/${routeId}`);
+}
+
+const onClickPlanAdd = (item:any)=>{
+    console.log(item,'---item---')
+}
+
+const onClickTagAdd = ()=>{};
+
+const onClickFolderAdd = ()=>{};
+
+
 
 </script>
 
