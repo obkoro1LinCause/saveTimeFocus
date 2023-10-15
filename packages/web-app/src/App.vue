@@ -5,17 +5,18 @@
         <div class="app-body">
             <div class="body-sidebar">
                 <TSideBar 
-                    v-model=sidebarLists
-                    @click-plan="onClickPlan"
-                    @add-plan="onClickPlanAdd"
-                    @add-tag="onClickTagAdd"
+                    v-model="sidebarConfig"
+                    @click-side="onClickSide"
+                    @add-plan-tag="onClickPlanTagAdd"
                     @add-folder="onClickFolderAdd"
                 ></TSideBar>
             </div>
             <div class="body-content">
-                <RouterView></RouterView>
-            </div>
-        </div>
+                 <RouterView v-slot="{ Component }"> 
+                    <component :is="Component" :page-name="pageName" />
+                </RouterView>
+             </div>
+        </div> 
     </div>
 </template>
 
@@ -25,68 +26,69 @@ import { RouterLink, RouterView, useRoute, useRouter} from 'vue-router';
 import { TSideBar, TypeSideBar } from '@bs/component';
 
 
-const { ListEnum,PlanEnum,TypeConfigs} = TypeSideBar
+const { ListEnum,PlanEnum,TypeConfigs,intelligentList } = TypeSideBar
 
 const router = useRouter();
-const sidebarLists = ref<TypeSideBar.TypeConfigs>([
-    {
-        name:'今天',
-        id:'today',
-        listType:TypeSideBar.Intelligent
-    },
-    {
-        name:'明天',
-        id:'tomorrow',
-    },
-    {
-        name:'本周',
-        id:'week',
-    },
-    {
-        name:'高优先级',
-        id:'high_priority',
-    },
-    {
-        name:'中优先级',
-        id:'medium_priority',
-    },
-    {
-        name:'低优先级',
-        id:'low_priority',
-    },
+const intelligents = intelligentList;
+const customs = [
     {
         name:'树',
         id:'low_priority_t',
+        listType:ListEnum.Custom,
         children:[
             {
                 name:'树11',
-                id:'low_priority_t1',
+                id:'low_priority_t11',
             },
             {
                 name:'树22',
-                id:'low_priority_t2',
+                id:'low_priority_t12',
             },
             {
                 name:'树33',
-                id:'low_priority_t3',
+                id:'low_priority_t13',
             }
         ]
-    }
-]);
+    },
+    {
+        name:'树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2树2',
+        id:'low_priority_t2',
+        listType:ListEnum.Custom,
+        children:[
+            {
+                name:'树111',
+                id:'low_priority_t21',
+            },
+            {
+                name:'树222',
+                id:'low_priority_t22',
+            },
+            {
+                name:'树333',
+                id:'low_priority_t23',
+            }
+        ]
+    },
+]
 
-const onClickPlan = (item:any)=>{
-    console.log(item,'---item---',router)
-    const { routeId } = item;
-    router.push(`/app/${routeId}`);
+
+const sidebarConfig = ref<TypeSideBar.TypeConfigs>({
+    intelligent:intelligents,
+    custom:customs
+});
+const pageName = ref();
+
+const onClickSide = (item:any)=>{
+    const { id,name } = item;
+    pageName.value = name;
+    router.push(`/app/${id}`);
 }
 
-const onClickPlanAdd = (item:any)=>{
+const onClickPlanTagAdd = (item:any)=>{
     console.log(item,'---item---')
-}
+};
 
-const onClickTagAdd = ()=>{};
-
-const onClickFolderAdd = ()=>{};
+const onClickFolderAdd = (item:any)=>{};
 
 
 
@@ -105,15 +107,18 @@ const onClickFolderAdd = ()=>{};
     border-right: 1px solid #ccc;
 }
 .app-body{
-    width: calc(100% - 45px);
+    width: calc(100% - 35px);
+    height: 100%;
     display: flex;
+    overflow: hidden;
 }
 .body-sidebar{
-    width: 240px;
+    width: 260px;
     height: 100%;
     border-right: 1px solid #ccc;
 }
 .body-content{
-    min-width: calc(100% - 240px);
+    width: calc(100% - 260px);
+    background:#ebedf0;
 }
 </style>

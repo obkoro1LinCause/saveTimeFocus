@@ -18,73 +18,67 @@ export type TypeConfig = {
     type?:PlanEnum,
     listType?:ListEnum
     children?:Array<TypeConfig>
+    sort?:number
 }
 
 export  type TypeConfigs = TypeConfig[];
 
-export const sideBarConfigGroup1:TypeConfigs = [
+
+
+export const intelligentList = [
     {
         name:'今天',
         id:'today',
+        listType:ListEnum.Intelligent
     },
     {
         name:'明天',
         id:'tomorrow',
+        listType:ListEnum.Intelligent
     },
     {
         name:'本周',
         id:'week',
+        listType:ListEnum.Intelligent
     },
     {
         name:'高优先级',
         id:'high_priority',
+        listType:ListEnum.Intelligent
     },
     {
         name:'中优先级',
         id:'medium_priority',
+        listType:ListEnum.Intelligent
     },
     {
         name:'低优先级',
         id:'low_priority',
-    }
-]
-
-export const sideBarConfigGroup2 = [
-    {
-        name:'树',
-        id:'low_priority_t',
-        children:[
-            {
-                name:'树11',
-                id:'low_priority_t1',
-            },
-            {
-                name:'树22',
-                id:'low_priority_t2',
-            },
-            {
-                name:'树33',
-                id:'low_priority_t3',
-            }
-        ]
+        listType:ListEnum.Intelligent
     },
     {
-        name:'树2',
-        id:'low_priority_t1',
-        disabledPark:true,
-        children:[
-            {
-                name:'树111',
-                id:'low_priority_t11',
-            },
-            {
-                name:'树222',
-                id:'low_priority_t22',
-            },
-            {
-                name:'树333',
-                id:'low_priority_t33',
-            }
-        ]
-    }
-]
+        name:'已计划',
+        id:'planned',
+        listType:ListEnum.Intelligent
+    },
+    {
+        name:'全部',
+        id:'all',
+        listType:ListEnum.Intelligent
+    },
+    {
+        name:'待定',
+        id:'pending',
+        listType:ListEnum.Intelligent
+    },
+    {
+        name:'已完成',
+        id:'complete',
+        listType:ListEnum.Intelligent
+    },
+    {
+        name:'任务',
+        id:'task',
+        listType:ListEnum.Intelligent
+    },
+];

@@ -9,8 +9,8 @@ const router = createRouter({
     },
     {
       path: '/app/:id',
-      name: 'TodoListPage',
-      component: () => import('../views/todoList/index.vue')
+      name: 'TodoPage',
+      component: () => import('../views/todo/index.vue')
     }
   ]
 })
