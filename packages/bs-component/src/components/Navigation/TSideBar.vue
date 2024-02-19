@@ -98,7 +98,7 @@
                 <Icon :icon-type="IconName.FolderAdd" @click="onClick('folder','创建清单文件夹')"></Icon>
             </div>
         </div>
-        <div class="side-dialog">
+        <!-- <div class="side-dialog">
             <Dialog
                 width="30%"
                 :show-close="false"
@@ -126,7 +126,7 @@
                 </template>
             </template>
             </Dialog>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -135,7 +135,6 @@ import { defineProps,defineEmits,ref, watch, onMounted,nextTick,computed } from 
 import { Dialog, Icon,TypeIcon,Colors } from '../index';
 import { type TypeConfigs, ListEnum,type TypeConfig } from './TSideBar';
 import draggable from 'vuedraggable';
-import { ElInput } from 'element-plus';
 const { IconName } = TypeIcon;
 
 const emits = defineEmits([

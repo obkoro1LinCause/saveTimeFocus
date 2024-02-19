@@ -1,35 +1,30 @@
-
 <template>
-    <div class="icon-container">
-        <template v-if="iconType === IconName.Plus">
-            <i class="el-icon" data-v-ea893728="" style="font-size: 20px;"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-ea893728=""><path fill="currentColor" d="M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64h352z"></path></svg></i>
-        </template>
-        <template v-if="iconType === IconName.FolderAdd">
-            <i class="el-icon" data-v-ea893728="" style="font-size: 20px;"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-ea893728=""><path fill="currentColor" d="M128 192v640h768V320H485.76L357.504 192H128zm-32-64h287.872l128.384 128H928a32 32 0 0 1 32 32v576a32 32 0 0 1-32 32H96a32 32 0 0 1-32-32V160a32 32 0 0 1 32-32zm384 416V416h64v128h128v64H544v128h-64V608H352v-64h128z"></path></svg></i>
-        </template>
-        <template v-if="iconType === IconName.ArrowDown">
-            <i class="el-icon" data-v-ea893728="" style="font-size: 20px;"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-ea893728=""><path fill="currentColor" d="M831.872 340.864 512 652.672 192.128 340.864a30.592 30.592 0 0 0-42.752 0 29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728 30.592 30.592 0 0 0-42.752 0z"></path></svg></i>
-        </template>
-        <template v-if="iconType === IconName.ArrowUp">
-            <i class="el-icon" data-v-ea893728="" style="font-size: 20px;"><svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" data-v-ea893728=""><path fill="currentColor" d="m488.832 344.32-339.84 356.672a32 32 0 0 0 0 44.16l.384.384a29.44 29.44 0 0 0 42.688 0l320-335.872 319.872 335.872a29.44 29.44 0 0 0 42.688 0l.384-.384a32 32 0 0 0 0-44.16L535.168 344.32a32 32 0 0 0-46.336 0z"></path></svg></i>
-        </template>
-    </div>
+    <a-image 
+      v-if="type == 'block'" 
+      width="10"
+      src="data:image/svg+xml,<svg width='10' height='10' viewBox='0 0 54 54' fill='none' xmlns='http://www.w3.org/2000/svg'><g clip-path='url(%23clip0_9_113)'><path d='M52.1438 11.3906C52.1438 10.125 51.1735 9.07031 49.9078 8.94374C39.4032 7.97343 30.8813 2.36249 28.0547 0.337494C27.4641 -0.0843811 26.6625 -0.0843811 26.0719 0.337494C23.2453 2.40468 14.7235 7.97343 4.26097 8.94374C2.99534 9.07031 2.02503 10.125 2.02503 11.3906C1.85628 19.6172 3.20628 47.6719 26.4516 53.9156C26.8735 54.0422 27.2953 54.0422 27.7172 53.9156C50.9203 47.6719 52.2703 19.6172 52.1438 11.3906Z' fill='%2300953C'/><path d='M52.1437 11.3906C52.1437 10.125 51.1734 9.07031 49.9078 8.94375C39.4031 7.97344 30.8812 2.3625 28.0547 0.3375C27.7594 0.084375 27.3797 0 27.0422 0V54C27.2531 54 27.4641 53.9578 27.675 53.9156C50.9203 47.6719 52.2703 19.6172 52.1437 11.3906Z' fill='%23007935'/><path d='M27 13.5C19.5328 13.5 13.5 19.5328 13.5 27C13.5 34.4672 19.5328 40.5 27 40.5C34.4672 40.5 40.5 34.4672 40.5 27C40.5 19.5328 34.4672 13.5 27 13.5ZM21.6844 18.9422C23.2453 17.8875 25.1016 17.3391 27 17.3391C28.8984 17.3391 30.7547 17.8875 32.3156 18.9422L18.9422 32.3156C16.0313 27.8859 17.2547 21.8953 21.6844 18.9422ZM32.3156 35.0578C30.7547 36.1125 28.8984 36.6609 27 36.6609C25.1016 36.6609 23.2453 36.1125 21.6844 35.0578L35.0578 21.6844C37.9688 26.1141 36.7453 32.1047 32.3156 35.0578Z' fill='%23FEFEFE'/></g><defs><clipPath id='clip0_9_113'><rect width='54' height='54' fill='white'/></clipPath></defs></svg>%0A">
+    </a-image>
 </template>
 
-<script setup lang="ts">
-import { defineProps } from 'vue';
-import { IconName } from './type';
+<script lang="ts">
+import { defineComponent, nextTick, h,ref, computed, onMounted,defineEmits } from "vue";
+import { Image } from 'ant-design-vue';
 
-const props = defineProps({
-   iconType:{
-        type:String,
-        default:''
-    }
+export default defineComponent({
+  name: "BIcon",
+  props: {
+    type:String,
+    
+  },
+  components: { Image },
+  setup(props, ctx) {
+    
+    return {
+        
+    };
+  },
 });
-
-
 </script>
 
 <style scoped>
-
 </style>

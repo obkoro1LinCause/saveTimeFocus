@@ -1,6 +1,6 @@
-import { createService,type BackendURLKeys,getEnv } from "@bs/component";
+import { createService,Utils } from "@bs/component";
 
-let mode:BackendURLKeys = getEnv();
+let mode:any = Utils.getEnv();
 const  service = createService(mode);
 
 export default service;

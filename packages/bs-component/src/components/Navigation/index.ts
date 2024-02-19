@@ -1,11 +1,11 @@
-import TSideBar from './TSideBar.vue';
-import DSideBar from './DSideBar.vue';
+// import TSideBar from './TSideBar.vue';
+// import DSideBar from './DSideBar.vue';
 
 
-import  * as TypeSideBar from './TSideBar';
+// import  * as TypeSideBar from './TSideBar';
 
-export {
-    TSideBar,
-    DSideBar,
-    TypeSideBar
-}
+// export {
+//     TSideBar,
+//     DSideBar,
+//     TypeSideBar
+// }

@@ -1,6 +1,4 @@
+import withInstall from '../../utils/withInstalls';
 import Icon from './index.vue';
-import  * as TypeIcon from './type';
-export {
-    Icon,
-    TypeIcon
-}
+
+export const BIcon = withInstall(Icon);

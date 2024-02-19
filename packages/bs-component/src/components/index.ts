@@ -1,5 +1,4 @@
-export * from './Navigation/index';
-export * from './Icon/index';
-export * from './Colors/index';
-export * from './Dialog/index';
-export * from './Table/index';
+export { BTrees,BTreesItem}  from './Trees/index';
+export { BEditor } from './Editor/index';
+export { BHeader } from './Header/index';
+export { BMenu } from './Menu/index';

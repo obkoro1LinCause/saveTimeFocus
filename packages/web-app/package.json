@@ -10,7 +10,6 @@
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
   },
   "dependencies": {
-    "element-plus": "^2.3.12",
     "pinia": "^2.1.6",
     "sass": "^1.66.1",
     "sass-loader": "^13.3.2",

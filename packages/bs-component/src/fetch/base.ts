@@ -27,10 +27,11 @@ function createService(suffixURL = ''): HttpMethodHandler {
     };
 
     const axiosInstance = axios.create(config);
-
     // 请求拦截器
     axiosInstance.interceptors.request.use((config)=>{
-        config.headers.Authorization = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IjE4NzUwMDkwMzYyQDE2My5jb20iLCJwYXNzd29yZCI6IjFxYXoiLCJpYXQiOjE2OTE1NjgwMDh9.DR2_5gjDlsycNsopUYd4OEL3LFaCAWb4voZvD6FD-GQ`;
+        const token = localStorage.getItem('user-token');
+        if(!token) return config;
+        config.headers.Authorization = `Bearer ${token}`;
         return config;
     },(error:AxiosError)=>{
         return Promise.reject(error);
@@ -38,17 +39,19 @@ function createService(suffixURL = ''): HttpMethodHandler {
     
     // 响应拦截器
     axiosInstance.interceptors.response.use((response:AxiosResponse)=>{
-        const data = response?.data || {};
-        const code = response?.status;
-        if(data?.status!=='success' && code!== 200){
-            return Promise.reject(data);
+        const data = response?.data;
+        const result = data?.result;
+        const code = result?.status
+        const status = data?.status;
+        if(status!=='success' || code === 500){
+            return Promise.reject({ data:result,error:true });
         }
-        return { ...data,code };
+        return { data:result,error:false };
 
     }, (error:AxiosError)=>{
         // 错误拦截
-        const errorResponse = error?.response;
-        return Promise.reject(errorResponse?.data);
+        const data = error?.response;
+        return Promise.reject({...data,error:false});
     });
     return {
         get<T = any>(url: string, data?: any, options?: any): Promise<AjaxResult<T>> {
