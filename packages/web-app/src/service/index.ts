@@ -1,4 +1,4 @@
-import { createService,Utils } from "@bs/component";
+import { createService,Utils } from "@toolkit";
 
 let mode:any = Utils.getEnv();
 const  service = createService(mode);

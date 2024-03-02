@@ -47,6 +47,8 @@
 import { ref, watch, defineProps,reactive } from "vue";
 import { useRouter } from 'vue-router';
 import { isEmail} from './index';
+import { message } from 'ant-design-vue';
+import { userSendEmail,userChangePassword } from '../../service/domain/user';
 
 const router = useRouter();
 const registerState = reactive<any>({
@@ -60,7 +62,7 @@ const FormRef = ref();
 
 const checkEmail = (_rule,value)=>{
   if(!value) return Promise.reject('请输入邮箱');
-  if(isEmail(value)) return Promise.reject('邮箱格式错误'); 
+  if(!isEmail(value)) return Promise.reject('邮箱格式输入错误'); 
   return Promise.resolve();
 }
 const checkPassword = (_rule,value)=>{
@@ -81,24 +83,44 @@ const checkEmailCode = (_rule,value)=>{
 
 
 const rulesBylogin= {
-  email:[{ required: true, message: '',validator:checkEmail,trigger: 'blur'},],
+  email:[{ required: true,validator:checkEmail,trigger: 'blur'},],
   password:[{ required: true, validator:checkPassword,trigger: 'blur'}],
 };
 
 const rulesByregister= {
-  email:[{ required: true, message: '',validator:checkEmail,trigger: 'blur'},],
+  email:[{ required: true,validator:checkEmail,trigger: 'blur'},],
   password:[{ required: true,validator:checkPassword,trigger: 'blur'}],
   passwordVerify:[{ required: true, validator:checkPasswordVerify,trigger: 'blur'}],
   emailCode:[{ required: true,validator:checkEmailCode, trigger: 'blur'}]
 };
 
-const onClick = (type: string) => {
+const onClick = async (type: string) => {
   if(type === 'login'){
     router.push('/app/user');
   }else if(type === 'ok'){
-    FormRef.value.validate().then(res=>{
-      console.log(res,'==res=');
+    FormRef.value.validate().then(async res=>{
+      if( registerState.password!==registerState.passwordVerify){
+        return message.error('请确认好密码！')
+      }
+      const params = Object.create(null);
+      params.email = registerState.email;
+      params.password = registerState.password;
+      params.emailCode = registerState.emailCode;
+      const ret:any = await userChangePassword(params);
+      if(!ret.error){
+        const { data } = ret;
+        localStorage.setItem('user-token',data?.token);
+        location.reload();
+      }
     }).catch(err=>err);
+  }else if(type === 'send'){
+    if(!registerState.email) return message.error('请输入邮箱账号');
+    const ret = await userSendEmail({
+      email:registerState.email
+    });
+    if(!ret.error){
+      message.success('验证码已发送至邮箱，有效期为30分钟');
+    };
   }
 };
 

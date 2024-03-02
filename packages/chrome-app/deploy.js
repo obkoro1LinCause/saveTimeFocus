@@ -14,18 +14,18 @@ function run() {
 
 // 修改element的引用地址 使element icon在其他网站上可用
 function elementFont() {
-  const elementPath = path.resolve(__dirname, './node_modules/element-plus/theme-chalk/', 'index.css')
-  let content = fs.readFileSync(elementPath).toString()
+  // const elementPath = path.resolve(__dirname, './node_modules/element-plus/theme-chalk/', 'index.css')
+  // let content = fs.readFileSync(elementPath).toString()
   // 替换匹配到的每个变量
-  const reg = /url\(.*?fonts\/element-icons\./g
+  // const reg = /url\(.*?fonts\/element-icons\./g
   // !!! 删除fonts/element-icons.ttf好像没有作用 还会在content网站中报错
   // 源字符: el-upload-list__item.is-success:not(.focusing):focus{outline-width:0}@font-face{font-family:element-icons;src:url(fonts/element-icons.woff) format("woff"),url(fonts/element-icons.ttf) format("truetype");font-weight:400;font-display:"auto";font-style:normal}[class*=" el-icon-"],
   // 源字符: src:url(fonts/element-icons.woff)
   // 更改为: src:url(chrome-extension://__MSG_@@extension_id__/fonts/element-icons.woff)
   let navigatorName = 'chrome-extension'
   if (navigator === 'fireFox') navigatorName = 'moz-extension'
-  content = content.replace(reg, `url(${navigatorName}://__MSG_@@extension_id__/fonts/element-icons.`)
-  fs.writeFileSync(elementPath, content)
+  // content = content.replace(reg, `url(${navigatorName}://__MSG_@@extension_id__/fonts/element-icons.`)
+  // fs.writeFileSync(elementPath, content)
 }
 
 // 更改插件版本与描述

@@ -1,10 +1,6 @@
-import { createService,BackendURLKeys } from "@bs/component";
-let mode:BackendURLKeys = 'dev';
-if(process.env.NODE_ENV === 'serve'){
-    mode = 'dev'
-}else{
-    mode = 'prod';
-}
+import { createService,Utils } from "@toolkit";
+
+let mode:any = Utils.getEnv();
 const  service = createService(mode);
 
 export default service;

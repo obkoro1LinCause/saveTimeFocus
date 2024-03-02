@@ -163,7 +163,7 @@ const onClick = async (type: string) => {
         message.success('登陆成功');
         userStore.setUserToken(ret?.data?.token);
         router.push('/app/home');
-      };
+      }
     }).catch(err=>err);
   }else if(type === 'register'){
     RegisterRef.value.validate().then(async res=>{
@@ -182,7 +182,6 @@ const onClick = async (type: string) => {
     }).catch(err=>err);
   }else if(type === 'send'){
     if(!registerState.email) return message.error('请输入邮箱账号');
-    console.log(type,'==type=');
     const ret = await userSendEmail({
       email:registerState.email
     });

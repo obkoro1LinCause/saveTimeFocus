@@ -1,44 +1,54 @@
 <template>
- <el-config-provider :locale="locale">
-   <div class="main_app">
-     <div class="main_header">
-      <Header @changeLang="onChange"></Header>
-     </div>
-     <div class="main_content">
-       <router-view></router-view>
-     </div>
+ <div class="app-main">
+    <Header 
+        @goTo="gotoUser"
+        @setLang="setLang" 
+        :userInfo="userInfo"
+    ></Header>
+    <div class="app-body">
+    <router-view></router-view>
     </div>
-  </el-config-provider>
+  </div>
 </template>
 
-<script lang="ts" setup>
-import { computed,ref,getCurrentInstance,provide} from 'vue';
-import Header from './page/components/header.vue';
-import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
-import en from 'element-plus/dist/locale/en.mjs';
 
- 
+<script lang="ts" setup>
+import { computed,ref,getCurrentInstance,provide,watch,onMounted } from 'vue';
+import { RouterLink, RouterView, useRoute, useRouter} from 'vue-router';
+import Header from './component/header.vue';
+import Siderbar from './component/siderbar.vue'
+
 const { appContext }:any = getCurrentInstance();
 const configMethods = appContext.config.globalProperties;
-const locale = ref(zhCn);
-const lang:any = ref('zh');
 
-const onChange = async(str:string)=>{
-  lang.value = str;
-  locale.value = str === 'zh' ? zhCn : en;
+const router = useRouter();
+const route = useRoute()
+const userInfo = ref();
+const token = ref();
+
+const gotoUser = ()=>{
+    router.push('/app/user');
 }
+
+const setLang = (lang)=>{
+    console.log('===setLang===',lang)
+}
+
+const getUserInfo = async (token)=>{};
+
+
 
 </script>
 
 <style scoped>
-.main_app {
-  height: 100%;
+.app-main{
+    width:100%;
+    height: 100%;
+    overflow: hidden;
 }
-.main_header{
-  border-bottom: 1px solid #ccc;
+.app-body{
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
 }
-.main_content{
-  padding: 10px;
-}
-
 </style>

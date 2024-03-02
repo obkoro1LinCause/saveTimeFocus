@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <div class="home-side">
-            <BMenu @click="clickMenu" ></BMenu>
+            <Siderbar @click="clickMenu" ></Siderbar>
         </div>
         <div class="home-body">
              <router-view></router-view>
@@ -13,6 +13,7 @@
 <script setup lang="ts">
 import { ref, watch, defineProps,reactive } from "vue";
 import { useRouter } from 'vue-router';
+import Siderbar from '../../component/siderbar.vue';
 
 const router = useRouter();
 
@@ -20,9 +21,6 @@ const clickMenu = (info)=>{
     router.push(`/app/home/${info.key}`);
 }
 
-// const getUser = ()=>{
-    
-// }
 </script>
 <style lang="scss" scoped>
 .home{
@@ -35,5 +33,6 @@ const clickMenu = (info)=>{
 }
 .home-body{
      width: calc(100% - 240px);
+     padding: 25px;
 }
 </style>

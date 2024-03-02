@@ -22,12 +22,12 @@ const columns = ref([
         key: 'nickname',
     },
     {
-        title: '自己的邀请码',
+        title: '邀请码',
         dataIndex: 'selfInviteCode',
         key: 'selfInviteCode',
     },
     {
-        title: '邀请码',
+        title: '被邀请码',
         dataIndex: 'inviteCode',
         key: 'inviteCode',
     },

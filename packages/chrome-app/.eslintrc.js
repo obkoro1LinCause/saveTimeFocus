@@ -12,6 +12,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    '@typescript-eslint/no-extra-semi':'off',
     'no-mixed-spaces-and-tabs':'off',
     'prefer-const':'off',
     '@typescript-eslint/no-unused-vars':'off',

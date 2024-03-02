@@ -1,17 +1,32 @@
 <template>
   <div class="box-card">
-      <span @click="onPopupClick"> {{tm('name')}}</span> 
+      <span @click="onPopupClick">
+        <a-tag color="pink">pink</a-tag> 
+        主页
+      </span> 
   </div>
 </template>
 
 <script lang="ts" setup>
 import { handlerWindow } from '../../utils/creat-window';
-import { VueI18n } from '@bs/component';
-const { useI18n } = VueI18n;
+import { RouterLink, RouterView, useRoute, useRouter} from 'vue-router';
+import { Utils } from '@toolkit';
+import { getCurrentInstance } from 'vue';
+import NET from '../../utils/net';
+import { utils } from '@/utils/index';
+
+const router = useRouter();
+const route = useRoute()
+
+const { appContext }:any = getCurrentInstance();
+const { useI18n } = Utils.VueI18n;
 const { tm } = useI18n();
 
+
 const onPopupClick = async()=>{
-  handlerWindow();
+  utils.jumpUrl(NET.OPTIONSPAGE)
+  // 创建小弹窗
+  // handlerWindow();
 }
 </script>
 
@@ -47,3 +62,4 @@ const onPopupClick = async()=>{
   background: #7f6026;
 }
 </style>
+

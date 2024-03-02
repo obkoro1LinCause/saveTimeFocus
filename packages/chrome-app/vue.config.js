@@ -113,6 +113,6 @@ module.exports = {
         .plugin('webpack-bundle-analyzer')
         .use(webpackBundleAnalyzer.BundleAnalyzerPlugin)
     }
-    config.resolve.alias.set('@bs/component',path.resolve(__dirname,'../bs-component'))
+    config.resolve.alias.set('@toolkit',path.resolve(__dirname,'../toolkit'))
   },
 }

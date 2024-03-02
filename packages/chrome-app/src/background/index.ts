@@ -70,12 +70,12 @@
 // 	}
 // }
 
-const test = ()=>{
-	console.log(111)
-}
+// const test = ()=>{
+// 	console.log(111)
+// }
 
 
-console.log(chrome,'---chrome')
+// console.log(chrome,'---chrome')
 // // 获取所有 tab
 // const pups = chrome.extension.getViews({
 //     type: 'popup'
@@ -106,5 +106,19 @@ console.log(chrome,'---chrome')
 //       	sendResponse({farewell: "goodbye"});
 //     }
 // });
+
+//
+
+
+
+
+chrome.runtime.onInstalled.addListener(() => {
+	// chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
+	// console.log(`background.js loaded1`,chrome.runtime.getURL('options.html'));
+})
+chrome.runtime.onStartup.addListener(() => {
+	// chrome.tabs.create({ url: chrome.runtime.getURL('options.html') })
+	// console.log(`background.js loaded2`,chrome.runtime.getURL('options.html'));
+})
 
 console.log(`background.js loaded`);

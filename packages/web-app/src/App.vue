@@ -1,10 +1,11 @@
 <template>
     <div class="app-main">
-        <BHeader 
-            @click="goToHome" 
+        <Header
+            @goTo="gotoUser"
             @setLang="setLang"
+            @menuClick="menuClick"
             :userInfo="userInfo"
-        ></BHeader>
+        ></Header>
         <div class="app-body">
             <router-view></router-view>
         </div>
@@ -14,20 +15,36 @@
 <script setup lang="ts">
 import { ref,watch } from 'vue';
 import { RouterLink, RouterView, useRoute, useRouter} from 'vue-router';
-import { userInfoByToken } from './service/domain/user';
+import { userInfoByToken,userLogout } from './service/domain/user';
+import { message } from 'ant-design-vue';
+import Header from './component/header.vue';
 
 const router = useRouter();
 const route = useRoute()
 const userInfo = ref();
 const token = ref();
 
-// 问题1:如果清空了session信息 如何保证获取到用户信息
-const goToHome = ()=>{
-    console.log('===goToHome===');
-};
+// 问题1:如果清空了session信息 如何保证获取到用户信息;
+
+const gotoUser = ()=>{
+    router.push('/app/user');
+    // console.log('==1=1==1',router);
+}
 
 const setLang = (lang)=>{
     console.log('===setLang===',lang)
+}
+const menuClick = async (e)=>{
+    const { key } =e;
+    if(key == 2){
+        const ret = await userLogout({
+            email:userInfo.value.email
+        });
+        if(!ret.error){
+            localStorage.removeItem('user-token');
+            location.reload();
+        }
+    }
 }
 
 const getUserInfo = async (token)=>{
@@ -35,12 +52,14 @@ const getUserInfo = async (token)=>{
     const ret = await userInfoByToken({token});
     if(!ret.error){
         userInfo.value = ret?.data;
-    };
+    }
 }
 
 watch(()=>route,(nv)=>{
-    token.value = localStorage.getItem('user-token');
-    getUserInfo(token.value);
+    if(nv?.name !== 'UserPage'){
+        token.value = localStorage.getItem('user-token');
+        getUserInfo(token.value);
+    }
 },{immediate:true,deep:true})
 
 </script>

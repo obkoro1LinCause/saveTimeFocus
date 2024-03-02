@@ -11,7 +11,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@bs/component':fileURLToPath(new URL('../bs-component', import.meta.url)),
+      '@toolkit':fileURLToPath(new URL('../toolkit', import.meta.url)),
     }
   }
 })

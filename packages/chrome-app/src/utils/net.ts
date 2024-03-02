@@ -30,7 +30,7 @@ function getNavigatorOptions():ChromeOptions {
       const FIREFOX_UUID = '17ce4bd7-60f8-432c-9848-a61dd819bc06'
       // 本地调试火狐的id
       const optionsUrl = window.browser.extension.getURL('options.html');
-      console.log(optionsUrl,'--optionsUrl--')
+      console.log(optionsUrl,'--optionsUrl--');
       return {
         name: 'Firefox',
         optionsUrl,

@@ -1,16 +1,17 @@
 import { createApp } from 'vue';
 import AppComponent from './App/popup.vue';
-import ElementPlus from 'element-plus';
-import 'element-plus/dist/index.css';
 import GlobalPlugin from '@/utils';
 import i18n from '@/locales';
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/reset.css';
+import router from '../options/App/router/index';
 
 const app = createApp(AppComponent);
 
+
 app.component('app-component',AppComponent);
-app.use(ElementPlus);
-app.use(GlobalPlugin);
-app.use(i18n);
+app.use(GlobalPlugin).use(Antd).use(router).use(i18n);
+
 app.mount('#app');
 
 
