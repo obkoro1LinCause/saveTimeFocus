@@ -1,5 +1,5 @@
 import axios, { type AxiosRequestConfig, type AxiosResponse,AxiosError} from 'axios';
-import { statusMap, type AjaxResult } from './type';
+import { statusErrMap, type AjaxResult } from './type';
 import { message } from 'ant-design-vue';
 
 //后端服务
@@ -27,9 +27,9 @@ function createService(suffixURL = ''): HttpMethodHandler {
         timeout: 60000
     };
 
-    const axiosInstance = axios.create(config);
+    const axiosInstance:any = axios.create(config);
     // 请求拦截器
-    axiosInstance.interceptors.request.use((config)=>{
+    axiosInstance.interceptors.request.use((config:any)=>{
         const token = localStorage.getItem('user-token');
         if(!token) return config;
         config.headers.Authorization = `Bearer ${token}`;
@@ -39,20 +39,23 @@ function createService(suffixURL = ''): HttpMethodHandler {
     });
     
     // 响应拦截器
-    axiosInstance.interceptors.response.use((res)=>{
+    axiosInstance.interceptors.response.use((res:any)=>{
         const data = res?.data;
+        const resStatus = data?.status;
         const result = data?.result;
-        const code = result?.status
-        const status = data?.status;
-        const error = result?.message;
-        if(status!=='success' || code === 500){
-          message.error(error || '接口报错');
-          return Promise.reject({data:error,error:true});
+        const code = result?.status;    //code码
+        const errMsg = result?.message;
+
+        // 特殊情况处理 HttpCustomError会走这个逻辑，其余error报错走下面
+        if(resStatus == 'success' && code &&  code != 200){
+            message.error(errMsg || '接口报错');
+            return Promise.reject({ data:errMsg,error:true });
         }
         return { data:result,error:false };
 
     }, (error:AxiosError)=>{
         const data:any = error?.response?.data;
+        const code :any = data?.code;
         message.error(data?.message || '接口报错');
         return Promise.reject({ data,error:true });
     });

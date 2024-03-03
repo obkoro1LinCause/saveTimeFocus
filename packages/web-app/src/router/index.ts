@@ -24,13 +24,13 @@ const router = createRouter({
           component: () => import('../views/user/forget.vue')
         },
       ],
-      // beforeEnter:(to, from, next)=>{
-      //   const token = localStorage.getItem('user-token');
-      //   if(!token){
-      //     return next();
-      //   }
-      //   return next('/app/home');
-      // }
+      beforeEnter:(to, from, next)=>{
+        const token = localStorage.getItem('user-token');
+        if(!token){
+          return next();
+        }
+        return next('/app/home');
+      }
     },
     {
       path:'/app/home',
@@ -74,14 +74,14 @@ const router = createRouter({
           component: () => import('../views/home/admin/index.vue'),
         }
       ],
-      // beforeEnter:(to, from, next)=>{
-      //   const token = localStorage.getItem('user-token');
-      //   console.log('====token===',token)
-      //   if(!token){
-      //     return next('/app/user')
-      //   }
-      //   return next();
-      // }
+      beforeEnter:(to, from, next)=>{
+        const token = localStorage.getItem('user-token');
+        console.log('====token===',token)
+        if(!token){
+          return next('/app/user')
+        }
+        return next();
+      }
     },
   ]
 });
