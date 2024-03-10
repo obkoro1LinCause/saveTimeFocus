@@ -13,22 +13,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref,watch } from 'vue';
+import { computed, ref,watch } from 'vue';
 import { RouterLink, RouterView, useRoute, useRouter} from 'vue-router';
-import { userInfoByToken,userLogout } from './service/domain/user';
+import { userLogout } from './service/domain/user';
 import { message } from 'ant-design-vue';
 import Header from './component/header.vue';
+import { useUserStore } from './stores/user';
 
 const router = useRouter();
-const route = useRoute()
-const userInfo = ref();
-const token = ref();
+const route = useRoute();
+const userStore = useUserStore();
+
+const userInfo = computed(()=>{
+    return userStore.userInfo;
+})
 
 // 问题1:如果清空了session信息 如何保证获取到用户信息;
 
 const gotoUser = ()=>{
     router.push('/app/user');
-    // console.log('==1=1==1',router);
 }
 
 const setLang = (lang)=>{
@@ -46,21 +49,6 @@ const menuClick = async (e)=>{
         }
     }
 }
-
-const getUserInfo = async (token)=>{
-    if(!token) return userInfo.value = null;
-    const ret = await userInfoByToken({token});
-    if(!ret.error){
-        userInfo.value = ret?.data;
-    }
-}
-
-watch(()=>route,(nv)=>{
-    if(nv?.name !== 'UserPage'){
-        token.value = localStorage.getItem('user-token');
-        getUserInfo(token.value);
-    }
-},{immediate:true,deep:true})
 
 </script>
 

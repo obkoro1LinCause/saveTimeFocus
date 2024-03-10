@@ -1,14 +1,18 @@
 
 <template>
     <div>
-        LIFE1111
+        LIFE1111  {{ tm('name') }} {{ tm('manage') }}
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch,defineProps } from 'vue';
 import { useRoute } from 'vue-router';
+import { useI18n } from '@/locales';
+
+const { locale, tm } = useI18n();
 const route = useRoute();
+
 
 const props = defineProps({
     pageName:{

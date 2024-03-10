@@ -161,7 +161,7 @@ const onClick = async (type: string) => {
       const ret = await userLogin(params);
       if(!ret.error){
         message.success('登陆成功');
-        userStore.setUserToken(ret?.data?.token);
+        localStorage.setItem('user-token',ret?.data?.token);
         router.push('/app/home');
       }
     }).catch(err=>err);

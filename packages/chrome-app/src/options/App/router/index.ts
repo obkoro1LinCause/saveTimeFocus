@@ -1,70 +1,80 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import { useUserStore } from '../stores/user';
+import i18n from '@/locales/index';
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
       path:'/',
-      redirect:'/app/home'
+      redirect:'/app/home/:lang'
     },
     {
-      path:'/app/home',
+      path:'/app/home/:lang',
       name: 'HomePage',
       component: () => import('../views/home/index.vue'),
-      redirect:'/app/home/life',
+      redirect:'/app/home/life/:lang',
       children:[
         {
-          path: '/app/home/life',
+          path: '/app/home/life/:lang',
           component: () => import('../views/home/life/index.vue'),
           name:'LifePage'
         },
         {
-          path: '/app/home/invest',
+          path: '/app/home/invest/:lang',
           component: () => import('../views/home/invest/index.vue'),
           name:'InvestPage'
         },
         {
-          path: '/app/home/admin',
+          path: '/app/home/admin/:lang',
           component: () => import('../views/home/admin/index.vue'),
           name:'AdminPage'
         }
       ],
-      beforeEnter:(to, from, next)=>{
-        const token = localStorage.getItem('user-token');
-        console.log('====token===',token)
-        if(!token){
-          return next('/app/user')
-        }
-        return next();
-      }
     },
     {
-      path: '/app/user',
-      name: 'UserPage',
+      path: '/app/user/:lang',
       component: () => import('../views/user/index.vue'),
-      redirect:'/app/user',
+      redirect:'/app/user/:lang',
       children:[
         {
-          path: '/app/user',
+          path: '/app/user/:lang',
           name: 'LoginOrSignPage',
           component: () => import('../views/user/loginOrSign.vue')
         },
         {
-          path: '/app/user/forget',
+          path:`/app/user/forget/:lang`,
           name: 'ForgetPage',
           component: () => import('../views/user/forget.vue')
         },
       ],
-      beforeEnter:(to, from, next)=>{
-        const token = localStorage.getItem('user-token');
-        if(!token){
-          return next();
-        }
-        return next('/app/home');
-      }
     },
   ]
 });
+
+
+router.beforeEach(async (to, from, next) => {
+
+  const lang = i18n.global.locale.value;
+  const userStore = useUserStore()
+  const token = localStorage.getItem('user-token');
+  const user = await userStore.getUserInfo(token);
+
+
+  if(to?.fullPath?.includes('user') && !user){
+    return next();
+  }else if(!to?.fullPath?.includes('user') && !user){
+    return next({
+      name:'LoginOrSignPage',
+      params:{
+        lang
+      }
+    })
+  }else{
+    userStore.setUser(user);
+    return next();
+  }
+})
 
 
 export default router;

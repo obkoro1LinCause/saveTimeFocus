@@ -3,7 +3,7 @@ import { createPinia } from 'pinia'
 import App from './App/App.vue';
 import GlobalPlugin from '@/utils';
 import router from './App/router';
-import i18n from '@/locales';
+import i18n,{ useI18n } from '@/locales';
 import Antd from 'ant-design-vue';
 
 import 'ant-design-vue/dist/reset.css';

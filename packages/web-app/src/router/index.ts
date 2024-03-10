@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/stores/user';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,14 +24,7 @@ const router = createRouter({
           name: 'ForgetPage',
           component: () => import('../views/user/forget.vue')
         },
-      ],
-      beforeEnter:(to, from, next)=>{
-        const token = localStorage.getItem('user-token');
-        if(!token){
-          return next();
-        }
-        return next('/app/home');
-      }
+      ]
     },
     {
       path:'/app/home',
@@ -73,18 +67,26 @@ const router = createRouter({
           name: 'AdminPage',
           component: () => import('../views/home/admin/index.vue'),
         }
-      ],
-      beforeEnter:(to, from, next)=>{
-        const token = localStorage.getItem('user-token');
-        console.log('====token===',token)
-        if(!token){
-          return next('/app/user')
-        }
-        return next();
-      }
+      ]
     },
   ]
 });
+
+
+router.beforeEach(async (to, from, next) => {
+  const userStore = useUserStore()
+  const token = localStorage.getItem('user-token');
+  const user = await userStore.getUserInfo(token);
+  
+  if(to?.fullPath?.includes('user') && !user){
+    return next();
+  }else if(!to?.fullPath?.includes('user') && !user){
+    return next('/app/user');
+  }else{
+    userStore.setUser(user);
+    return next();
+  }
+})
 
 
 export default router;

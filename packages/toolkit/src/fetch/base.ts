@@ -31,8 +31,10 @@ function createService(suffixURL = ''): HttpMethodHandler {
     // 请求拦截器
     axiosInstance.interceptors.request.use((config:any)=>{
         const token = localStorage.getItem('user-token');
+        // const lang = localStorage.getItem('lang');
         if(!token) return config;
         config.headers.Authorization = `Bearer ${token}`;
+        // config.headers['Accept-Language'] = lang // 设置请求头部
         return config;
     },(error:AxiosError)=>{
         return Promise.reject(error);
@@ -54,6 +56,7 @@ function createService(suffixURL = ''): HttpMethodHandler {
         return { data:result,error:false };
 
     }, (error:AxiosError)=>{
+        console.log(error)
         const data:any = error?.response?.data;
         const code :any = data?.code;
         message.error(data?.message || '接口报错');

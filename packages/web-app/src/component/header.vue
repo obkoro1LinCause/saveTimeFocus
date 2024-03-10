@@ -5,9 +5,11 @@
           <span class="title">SAVETIMEFOCUS</span>
         </div>
         <div class="user-rt flex">
-          <a-button size="small" @click="onClick('lang')" class="mr-8">{{ lang }}</a-button>
           <a-dropdown placement="bottom">
-            <UserOutlined/>
+              <div>
+                <UserOutlined :style="{fontSize: '18px', color: '#08c'}"/>
+                <span>{{userInfo?.name}}</span>
+              </div>
               <template #overlay>
                 <a-menu @click="onMenuClick">
                   <a-menuItem key="1">
@@ -17,6 +19,7 @@
                 </a-menu>
               </template>
           </a-dropdown>
+          <a-button size="small" @click="onClick('lang')" class="ml-8">{{ lang }}</a-button>
         </div>
     </div>
     <div class="none-user" v-else>
@@ -40,6 +43,7 @@ import { useRoute } from 'vue-router';
 
 export default defineComponent({
   name: "Header",
+  components:{UserOutlined},
   props: {
     userInfo:{
       type:Object,

@@ -5,18 +5,21 @@
           <span class="title">SAVETIMEFOCUS</span>
         </div>
         <div class="user-rt flex">
-          <a-button size="small" @click="onClick('lang')" class="mr-8">{{ lang }}</a-button>
           <a-dropdown placement="bottom">
-            <UserOutlined/>
+              <div>
+                <UserOutlined :style="{fontSize: '18px', color: '#08c'}"/>
+                <span>{{userInfo?.name}}</span>
+              </div>
               <template #overlay>
                 <a-menu @click="onMenuClick">
                   <a-menuItem key="1">
                     <span>{{ userInfo.email }}</span>
                   </a-menuItem>
-                  <a-menuItem key="2">退出</a-menuItem>
+                  <a-menuItem key="2">{{ tm('exit') }}</a-menuItem>
                 </a-menu>
               </template>
           </a-dropdown>
+          <a-button size="small" @click="onClick('lang')" class="ml-8">{{ lang }}</a-button>
         </div>
     </div>
     <div class="none-user" v-else>
@@ -34,12 +37,14 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, nextTick, ref, computed, onMounted,defineEmits } from "vue";
+import { defineComponent, nextTick, ref, computed, onMounted,defineEmits,getCurrentInstance } from "vue";
 import { UserOutlined } from '@ant-design/icons-vue';
 import { useRoute } from 'vue-router';
+import { useI18n } from '@/locales';
 
 export default defineComponent({
   name: "Header",
+  components:{UserOutlined},
   props: {
     userInfo:{
       type:Object,
@@ -48,7 +53,9 @@ export default defineComponent({
   },
   setup(props, ctx) {
     const route = useRoute();
-    const lang = ref('中文')
+    const { tm }:any = useI18n();
+    const lang = ref(tm('lang'));
+    // 展示登录｜注册
     const showEntrance = computed(()=>{
       if(route.path.includes('/app/user')) return false;
       if(!props.userInfo) return true;
@@ -58,10 +65,10 @@ export default defineComponent({
       if(type === 'push'){
         ctx.emit('goTo');
       }else if(type == 'lang'){
-        if(lang.value !== '中文'){
-          lang.value = '中文';
+        if(lang.value !== 'zh'){
+          lang.value = 'zh';
         }else{
-          lang.value = 'En';
+          lang.value = 'en';
         }
         ctx.emit('setLang',lang.value)
       }
@@ -73,7 +80,8 @@ export default defineComponent({
       onClick,
       lang,
       onMenuClick,
-      showEntrance
+      showEntrance,
+      tm
     };
   },
 });
