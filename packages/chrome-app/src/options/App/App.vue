@@ -1,14 +1,16 @@
 <template>
  <div class="app-main">
-    <Header 
-        @goTo="gotoUser"
-        @setLang="setLang" 
-        :userInfo="userInfo"
-        @menuClick="menuClick"
-    ></Header>
-    <div class="app-body">
-        <router-view></router-view>
-    </div>
+        <Header 
+            @goTo="gotoUser"
+            @setLang="setLang" 
+            :userInfo="userInfo"
+            @menuClick="menuClick"
+        ></Header>
+        <div class="app-body">
+           <a-config-provider :locale="locale === 'en' ? enUS : zhCN">
+              <router-view></router-view>
+           </a-config-provider>
+        </div>
   </div>
 </template>
 
@@ -19,13 +21,20 @@ import { userLogout } from '../../service/domain/user';
 import Header from './component/header.vue';
 import Siderbar from './component/siderbar.vue';
 import { useUserStore } from '../App/stores/user';
-import { useI18n } from '@/locales';
+import i18n,{ useI18n } from '@/locales';
+
+import enUS from 'ant-design-vue/es/locale/en_US';
+import zhCN from 'ant-design-vue/es/locale/zh_CN';
+// import dayjs from 'dayjs';
+// import 'dayjs/locale/zh-cn';
+// dayjs.locale('en');
 
 const { appContext }:any = getCurrentInstance();
 const configMethods = appContext.config.globalProperties;
 
 const router = useRouter();
-const route = useRoute()
+const route = useRoute();
+const currentRoute = router.currentRoute;
 const userStore = useUserStore();
 const { tm,locale } = useI18n();
 const token = ref();
@@ -53,6 +62,7 @@ const setLang = (lang)=>{
             lang:locale.value
         }
     });
+    location.reload()
 }
 
 const menuClick = async (e)=>{
@@ -68,6 +78,19 @@ const menuClick = async (e)=>{
     }
 }
 
+
+// 路由重定向
+watch(()=>route,(nv)=>{
+    const lang:any = nv?.params?.lang;
+    if(!lang || !['zh','en'].includes(lang)){
+        router.push({
+            name:'LifePage',
+            params:{
+                lang:locale.value,
+            }
+        })
+    }
+},{immediate:true})
 
 </script>
 

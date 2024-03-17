@@ -7,10 +7,10 @@ const router = createRouter({
   routes: [
     {
       path:'/',
-      redirect:'/app/home/:lang'
+      redirect:'/app/home',
     },
     {
-      path:'/app/home/:lang',
+      path:'/app/home',
       name: 'HomePage',
       component: () => import('../views/home/index.vue'),
       redirect:'/app/home/life/:lang',
@@ -54,12 +54,10 @@ const router = createRouter({
 
 
 router.beforeEach(async (to, from, next) => {
-
   const lang = i18n.global.locale.value;
   const userStore = useUserStore()
   const token = localStorage.getItem('user-token');
   const user = await userStore.getUserInfo(token);
-
 
   if(to?.fullPath?.includes('user') && !user){
     return next();

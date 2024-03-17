@@ -81,7 +81,7 @@ export default defineComponent({
       lang,
       onMenuClick,
       showEntrance,
-      tm
+      tm,
     };
   },
 });

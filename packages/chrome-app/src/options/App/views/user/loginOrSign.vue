@@ -85,7 +85,9 @@ import { isEmail } from './index';
 import { message } from 'ant-design-vue';
 import { userRegister,userSendEmail,userLogin } from '@/service/domain/user';
 import { useUserStore } from '../../stores/user';
+import { useI18n } from '@/locales';
 
+ const { tm,locale } = useI18n();
 const userStore = useUserStore();
 const router = useRouter();
 const LoginRef = ref();
@@ -152,7 +154,12 @@ const tabClick = (tab: string) => {
 
 const onClick = async (type: string) => {
   if(type === 'forget'){
-    router.push('/app/user/forget');
+    router.push({
+      name:'ForgetPage',
+      params:{
+        lang:locale.value
+      }
+    });
   }else if(type === 'login'){
     LoginRef.value.validate().then(async res=>{
       const params = Object.create(null);
@@ -162,7 +169,12 @@ const onClick = async (type: string) => {
       if(!ret.error){
         message.success('登陆成功');
         localStorage.setItem('user-token',ret?.data?.token);
-        router.push('/app/home');
+        router.push({
+          name:'LifePage',
+          params:{
+            lang:locale.value
+          }
+        });
       }
     }).catch(err=>err);
   }else if(type === 'register'){

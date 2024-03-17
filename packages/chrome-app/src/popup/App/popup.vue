@@ -9,7 +9,7 @@
 
 <script lang="ts" setup>
 import { HomeOutlined } from '@ant-design/icons-vue';
-import { handlerWindow } from '../../utils/creat-window';
+import { handlerWindow } from '../../utils/creatWindow';
 import { RouterLink, RouterView, useRoute, useRouter} from 'vue-router';
 // import { Utils } from '@toolkit';
 import { getCurrentInstance } from 'vue';
@@ -24,7 +24,7 @@ const { appContext }:any = getCurrentInstance();
 
 const onPopupClick = async()=>{
   utils.jumpUrl(NET.OPTIONSPAGE)
-  // 创建小弹窗
+  // 创建小弹窗 TODO:路由调整是否合理
   // handlerWindow();
 }
 </script>

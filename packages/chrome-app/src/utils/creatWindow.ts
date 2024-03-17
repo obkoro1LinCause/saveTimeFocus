@@ -1,8 +1,9 @@
 export function createWindow(left:number, top:number, width:number, height:number) {
+	const url = chrome.runtime.getURL("options.html");
 	chrome.windows.create(
 		{
-			url: chrome.runtime.getURL("options.html"),
-			type: "popup",
+			url: url,
+			type: "normal",	//"", "popup", "panel"
 			left, top,
 			width, height
 		}, 

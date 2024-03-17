@@ -43,23 +43,19 @@ function createService(suffixURL = ''): HttpMethodHandler {
     // 响应拦截器
     axiosInstance.interceptors.response.use((res:any)=>{
         const data = res?.data;
-        const resStatus = data?.status;
+        const status = data?.status;
         const result = data?.result;
-        const code = result?.status;    //code码
-        const errMsg = result?.message;
 
-        // 特殊情况处理 HttpCustomError会走这个逻辑，其余error报错走下面
-        if(resStatus == 'success' && code &&  code != 200){
-            message.error(errMsg || '接口报错');
-            return Promise.reject({ data:errMsg,error:true });
+        if(status !== 'success'){
+            const error = data?.error;
+            message.error(error|| '接口报错');
+            return Promise.reject({ data:error,error:true });
         }
         return { data:result,error:false };
 
     }, (error:AxiosError)=>{
-        console.log(error)
         const data:any = error?.response?.data;
-        const code :any = data?.code;
-        message.error(data?.message || '接口报错');
+        message.error(data?.error || '接口报错');
         return Promise.reject({ data,error:true });
     });
     return {

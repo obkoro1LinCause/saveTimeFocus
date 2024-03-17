@@ -1,19 +1,27 @@
-import  { createApp } from 'vue';
+import vue,{ createApp } from 'vue';
 import { createPinia } from 'pinia'
 import App from './App/App.vue';
 import GlobalPlugin from '@/utils';
 import router from './App/router';
-import i18n,{ useI18n } from '@/locales';
+import i18n from '@/locales';
 import Antd from 'ant-design-vue';
+import directives from './App/directive/tooltip'
 
 import 'ant-design-vue/dist/reset.css';
 import '@/styles/index.scss';
 
 const app = createApp(App);
 
-app.use(GlobalPlugin).use(Antd).use(router).use(createPinia()).use(i18n);
+app.use(i18n);
+app.use(GlobalPlugin)
+app.use(Antd)
+app.use(router)
+app.use(createPinia())
+app.use(directives)
 
 app.mount('#app');
+
+export default app;
 
 
 

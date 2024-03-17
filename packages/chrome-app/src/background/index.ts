@@ -1,5 +1,3 @@
-
-
 // function createWindow(left:number, top:number, width:number, height:number) {
 // 	chrome.windows.create(
 // 		{
@@ -95,11 +93,6 @@
 // });
 
 
-// chrome.action.onClicked.addListener(async () => {
-// 	console.log(`action.onClicked`);
-// 	handler();
-// });
-
 // chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // 	console.log(sender.tab ? "from a content script:" + sender.tab.url : "from the extension");
 //     if (request.greeting === "hello") {
@@ -110,12 +103,18 @@
 //
 
 
+// chrome.action.onClicked.addListener(async () => {
+// 	console.log(`action.onClicked`);
+// });
 
 
+
+// 安装完成事件
 chrome.runtime.onInstalled.addListener(() => {
-	// chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
+	chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
 	// console.log(`background.js loaded1`,chrome.runtime.getURL('options.html'));
-})
+});
+
 chrome.runtime.onStartup.addListener(() => {
 	// chrome.tabs.create({ url: chrome.runtime.getURL('options.html') })
 	// console.log(`background.js loaded2`,chrome.runtime.getURL('options.html'));

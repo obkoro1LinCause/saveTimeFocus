@@ -49,7 +49,9 @@ import { useRouter } from 'vue-router';
 import { isEmail} from './index';
 import { message } from 'ant-design-vue';
 import { userSendEmail,userChangePassword } from '@/service/domain/user';
+import { useI18n } from '@/locales';
 
+ const { tm,locale } = useI18n();
 const router = useRouter();
 const registerState = reactive<any>({
   email: "",
@@ -96,7 +98,12 @@ const rulesByregister= {
 
 const onClick = async (type: string) => {
   if(type === 'login'){
-    router.push('/app/user');
+    router.push({
+      name:'LoginOrSignPage',
+      params:{
+        lang:locale.value
+      }
+    });
   }else if(type === 'ok'){
     FormRef.value.validate().then(async res=>{
       if( registerState.password!==registerState.passwordVerify){
