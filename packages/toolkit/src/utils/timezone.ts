@@ -1,4 +1,18 @@
-export default [
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+
+export const formatTime = (format:string)=>{};
+
+export const getUtcByChina = (time:Date)=>{};
+
+export const getTimezoneByUtc = (timezoneId:string,utc:Date)=>{};
+
+
+export const timezoneList = [
     {
         timezoneCn:'国际日期变更线西',
         timezoneEn:'UTC-12:00',

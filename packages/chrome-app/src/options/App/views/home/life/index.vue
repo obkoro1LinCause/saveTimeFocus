@@ -1,7 +1,20 @@
 
 <template>
     <div>
-        <a-date-picker v-model:value="data1" @change="change"/>
+
+        <p>
+            <TimezoneSelect v-model="timezoneValue"></TimezoneSelect>
+        </p>
+
+        <p>
+            <a-date-picker 
+                v-model:value="data1" 
+                show-time 
+                placeholder="Select Time" 
+                @change="change" 
+                @ok="onOk" />
+        </p>
+       
     </div>
 </template>
 
@@ -9,25 +22,41 @@
 import { ref, watch,defineProps } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from '@/locales';
+import { Utils } from '@toolkit';
+import TimezoneSelect from '../../../component/timezone.vue'
 
-import dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
-import timezone from 'dayjs/plugin/timezone'
-dayjs.extend(timezone);
-dayjs.extend(utc)
+// import dayjs from 'dayjs';
+// import utc from 'dayjs/plugin/utc';
+// import timezone from 'dayjs/plugin/timezone';
+// dayjs.extend(utc);
+// dayjs.extend(timezone);
+
+
 
 const { locale, tm } = useI18n();
 const route = useRoute();
 const data1 = ref();
-const change = (date,dateString)=>{
-    const tz = "America/New_York"
-    const utcDate = dayjs.utc(dateString);
-    const newDate = utcDate.tz(tz)
-    const d1 = dayjs.tz('2013-11-18 11:55', 'Asia/Taipei')
+const timezoneValue = ref('');
 
-    console.log(date,'===value locale===',dateString,utcDate.format(),newDate.format(),d1)
+
+const change = (date,dateString)=>{
+    // const utcDate = dayjs.utc(date);    //世界时间
+    // const utcFormate = utcDate.format('YYYY-MM-DD HH:mm:ss');   //转化世界时间
+    // const newDate = utcDate.tz(timezoneValue.value);    //转化时区
+
+    // console.log(dateString,'===value locale===',utcDate,utcFormate,timezoneValue.value,':',newDate.format('YYYY-MM-DD HH:mm:ss'))
+
+    // const local = dayjs.utc().local();
+    // const localFormat = dayjs.utc().local().format();
+    // console.log(local);
+    // const newDate = local.tz(timezoneValue.value);
+    // const newDateFormat = newDate.format('YYYY-MM-DD HH:mm:ss');
+    // console.log(newDate,newDateFormat);
 }
 
+const onOk = (value)=>{
+    // console.log('===1',value)
+}
 
 const props = defineProps({
     pageName:{
