@@ -5,10 +5,13 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 
+// 时间格式化
 export const formatTime = (format:string)=>{};
 
+// 中国标准时间转utc
 export const getUtcByChina = (time:Date)=>{};
 
+// utc转时区时间
 export const getTimezoneByUtc = (timezoneId:string,utc:Date)=>{};
 
 
