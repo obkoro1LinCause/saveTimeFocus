@@ -19,20 +19,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch,defineProps } from 'vue';
+import { ref, watch,defineProps,getCurrentInstance } from 'vue';
 import { useRoute } from 'vue-router';
 import { useI18n } from '@/locales';
-import { Utils } from '@toolkit';
 import TimezoneSelect from '../../../component/timezone.vue'
 
-// import dayjs from 'dayjs';
-// import utc from 'dayjs/plugin/utc';
-// import timezone from 'dayjs/plugin/timezone';
-// dayjs.extend(utc);
-// dayjs.extend(timezone);
 
-
-
+const { appContext }:any = getCurrentInstance();
+const configMethods = appContext.config.globalProperties; 
 const { locale, tm } = useI18n();
 const route = useRoute();
 const data1 = ref();
@@ -40,6 +34,7 @@ const timezoneValue = ref('');
 
 
 const change = (date,dateString)=>{
+    console.log('===',configMethods.dayPlugin.getUtcByChina('1'))
     // const utcDate = dayjs.utc(date);    //世界时间
     // const utcFormate = utcDate.format('YYYY-MM-DD HH:mm:ss');   //转化世界时间
     // const newDate = utcDate.tz(timezoneValue.value);    //转化时区

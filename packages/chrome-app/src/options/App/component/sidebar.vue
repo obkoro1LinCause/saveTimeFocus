@@ -5,17 +5,11 @@
         <router-link :to="{ name:item.name, params:{ lang:locale } }">
             <a-tooltip 
                 placement="right" 
-                :title="tm(item.key)" 
-                @mouseenter="onMouseenter(item)"
-                @mouseleave="onMouseount(item)"
-                @click="onClick(item)"
+                :title="tm(item.key)"
             >
                 <component 
-                    :is="item.icon" 
-                    :style="{
-                        fontSize: `${ activeKey == item.key ? '24px':'18px'}`,
-                        color: `${ activeKey == item.key ? '#08c':'#575757'}`
-                    }">
+                 :is="item.icon" 
+                >
                 </component>
             </a-tooltip>
         </router-link>
@@ -59,8 +53,6 @@ const sidebarList = ref([
     }
 ]);
 
-const activeKey = ref();
-
 
 const onMouseenter = (item)=>{
     
@@ -68,9 +60,6 @@ const onMouseenter = (item)=>{
 
 const onMouseount = (item)=>{
     
-}
-const onClick = (item)=>{
-    activeKey.value = item.key;
 }
 </script>
 
@@ -87,6 +76,14 @@ const onClick = (item)=>{
         margin: 15px 0;
         display: flex;
         justify-content: center;
+        span{
+            color:#575757;
+            font-size: 18px;
+        }
+        .router-link-active span{
+            color:#08c;
+            font-size: 20px;
+        }
     }
 }
 </style>

@@ -20,7 +20,7 @@
       "@/*": [
         "src/*"
       ],
-      "@toolkit":["../toolkit"]
+      "toolkit":["../toolkit"]
     },
     "lib": [
       "esnext",

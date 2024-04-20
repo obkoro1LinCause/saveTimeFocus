@@ -1,10 +1,10 @@
-import { createService,Utils } from "@toolkit";
+import { createService } from "toolkit";
+import getEnv from "@/utils/getEnv";
 
-let mode:any = Utils.getEnv('chrome');
-const  service = createService(mode);
+const env = getEnv();
+const service = createService(env);
 
 export default service;
-export { mode };
 
 
 

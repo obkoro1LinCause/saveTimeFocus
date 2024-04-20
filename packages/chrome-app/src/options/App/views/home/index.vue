@@ -2,7 +2,7 @@
 <div class="home">
     <Sidebar @click="sidebarClick"></Sidebar>
     <div class="content">
-        <span> {{ currentRoute.name }} </span>
+        <!-- <span> {{ currentRoute.name }} </span> -->
         <router-view></router-view>
     </div>
 </div>
@@ -15,16 +15,15 @@ import { useI18n } from '@/locales';
 import Sidebar from '../../component/sidebar.vue'
 
 const router = useRouter();
-// const route = useRoute();
+const route = useRoute();
 const currentRoute = router.currentRoute;
 const { appContext }:any = getCurrentInstance();
 const configMethods = appContext.config.globalProperties;
 const { tm, locale  } = useI18n();
-// const currentItem = ref();
 
 
 const sidebarClick = (item)=>{
-    currentItem.value = item;
+    // currentItem.value = item;
     router.push({
         name:item.name,
         params:{
@@ -32,6 +31,19 @@ const sidebarClick = (item)=>{
         }
     })
 }
+
+// 路由重定向
+watch(()=>route,(nv)=>{
+    const lang:any = nv?.params?.lang;
+    if(!lang || !['zh','en'].includes(lang)){
+        router.push({
+            name:'LifePage',
+            params:{
+                lang:locale.value,
+            }
+        })
+    }
+},{immediate:true});
 
 </script>
 <style lang="scss" scoped>

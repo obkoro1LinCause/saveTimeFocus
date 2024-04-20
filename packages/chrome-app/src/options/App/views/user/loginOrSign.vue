@@ -142,7 +142,7 @@ const rulesByregister= {
   email:[{ required: true,validator:checkEmail,trigger: 'blur'},],
   password:[{ required: true,validator:checkPassword,trigger: 'blur'}],
   passwordVerify:[{ required: true, validator:checkPasswordVerify,trigger: 'blur'}],
-  emailCode:[{ required: true,validator:checkEmailCode, trigger: 'blur'}],
+  // emailCode:[{ required: true,validator:checkEmailCode, trigger: 'blur'}],
   inviteCode:[{validator:checkInviteCode, trigger: 'blur'}]
 };
 
@@ -162,44 +162,62 @@ const onClick = async (type: string) => {
     });
   }else if(type === 'login'){
     LoginRef.value.validate().then(async res=>{
-      const params = Object.create(null);
-      params.email = loginState.email;
-      params.password = loginState.password;
-      const ret = await userLogin(params);
-      if(!ret.error){
-        message.success('登陆成功');
-        localStorage.setItem('user-token',ret?.data?.token);
-        router.push({
-          name:'LifePage',
-          params:{
-            lang:locale.value
-          }
-        });
+      try{
+        const params = Object.create(null);
+        params.email = loginState.email;
+        params.password = loginState.password;
+        const ret = await userLogin(params);
+        if(!ret.error){
+          message.success('登陆成功');
+          // token暴露出来会危险
+          localStorage.setItem('user-token',ret?.data?.token);
+          router.push({
+            name:'LifePage',
+            params:{
+              lang:locale.value
+            }
+          });
+        }
+      }catch(err){
+        message.error(err?.data);
+        return err;
       }
+      
     }).catch(err=>err);
   }else if(type === 'register'){
     RegisterRef.value.validate().then(async res=>{
-      if( registerState.password!==registerState.passwordVerify){
-        return message.error('请确认好密码！')
+      try{
+        if( registerState.password!==registerState.passwordVerify){
+          return message.error('请确认好密码！')
+        }
+        const params = Object.create(null);
+        params.email = registerState.email;
+        params.password = registerState.password;
+        params.emailCode = registerState.emailCode;
+        params.inviteCode = registerState.inviteCode;
+        const ret = await userRegister(params);
+        if(!ret.error){
+          message.success('注册成功');
+        };
+      }catch(err){
+        message.error(err?.data);
+        return err;
       }
-      const params = Object.create(null);
-      params.email = registerState.email;
-      params.password = registerState.password;
-      params.emailCode = registerState.emailCode;
-      params.inviteCode = registerState.inviteCode;
-      const ret = await userRegister(params);
-      if(!ret.error){
-        message.success('注册成功');
-      };
     }).catch(err=>err);
   }else if(type === 'send'){
-    if(!registerState.email) return message.error('请输入邮箱账号');
-    const ret = await userSendEmail({
-      email:registerState.email
-    });
-    if(!ret.error){
-      message.success('验证码已发送至邮箱，有效期为30分钟');
-    };
+    // 调用接口都需要写try catch太麻烦了 需要统一处理
+    try{
+      if(!registerState.email) return message.error('请输入邮箱账号');
+      const ret = await userSendEmail({
+        email:registerState.email
+      });
+      if(!ret.error){
+        message.success('验证码已发送至邮箱，有效期为30分钟');
+      };
+    }catch(err){
+        message.error(err?.data);
+        return err;
+    }
   }
 };
 

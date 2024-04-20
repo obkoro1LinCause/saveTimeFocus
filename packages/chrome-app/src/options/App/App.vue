@@ -22,12 +22,11 @@ import Header from './component/header.vue';
 import Siderbar from './component/siderbar.vue';
 import { useUserStore } from '../App/stores/user';
 import i18n,{ useI18n } from '@/locales';
+import { message } from 'ant-design-vue';
 
 import enUS from 'ant-design-vue/es/locale/en_US';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
-// import dayjs from 'dayjs';
-// import 'dayjs/locale/zh-cn';
-// dayjs.locale('en');
+
 
 const { appContext }:any = getCurrentInstance();
 const configMethods = appContext.config.globalProperties;
@@ -36,12 +35,13 @@ const router = useRouter();
 const route = useRoute();
 const currentRoute = router.currentRoute;
 const userStore = useUserStore();
-const { tm,locale } = useI18n();
+const { tm,locale} = useI18n();
 const token = ref();
 
 const userInfo = computed(()=>{
     return userStore.userInfo;
-})
+});
+
 const gotoUser = ()=>{
     router.push({
         name: 'LoginOrSignPage',
@@ -62,35 +62,38 @@ const setLang = (lang)=>{
             lang:locale.value
         }
     });
-    location.reload()
 }
 
 const menuClick = async (e)=>{
-    const { key } =e;
-    if(key == 2){
-        const ret = await userLogout({
-            email:userInfo.value.email
-        });
-        if(!ret.error){
-            localStorage.removeItem('user-token');
-            location.reload();
+    try{
+        const { key } = e;
+        if(key == 2){
+            const ret:any = await userLogout();
+            if(!ret.error){ 
+                message.success('注销成功！');
+                location.reload();
+            }
         }
+    }catch(err){
+        message.error(err?.data);
+        location.reload();
+        return err;
     }
 }
 
 
-// 路由重定向
-watch(()=>route,(nv)=>{
-    const lang:any = nv?.params?.lang;
-    if(!lang || !['zh','en'].includes(lang)){
-        router.push({
-            name:'LifePage',
-            params:{
-                lang:locale.value,
-            }
-        })
-    }
-},{immediate:true})
+// // 路由重定向
+// watch(()=>route,(nv)=>{
+//     const lang:any = nv?.params?.lang;
+//     if(!lang || !['zh','en'].includes(lang)){
+//         router.push({
+//             name:'LifePage',
+//             params:{
+//                 lang:locale.value,
+//             }
+//         })
+//     }
+// },{immediate:true})
 
 </script>
 

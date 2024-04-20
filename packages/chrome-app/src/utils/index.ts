@@ -1,6 +1,7 @@
 
 import { App } from 'vue';
 import NET from '@/utils/net';
+import { Day } from 'toolkit';
 
 
 
@@ -56,6 +57,7 @@ export default {
   install: (app:App, options?:any) => {
     app.config.globalProperties.NET = NET;
     app.config.globalProperties.$utils = utils;
+    app.config.globalProperties.dayPlugin = new Day();
     console.log("我的第一个插件",options);
   }
 };

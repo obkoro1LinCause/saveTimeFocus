@@ -1,15 +1,13 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import { userInfoByToken } from '@/service/domain/user';
+import { getCurrentUser } from '@/service/domain/user';
 
-// 通过localStorage来数据持久化
 export const useUserStore = defineStore('user', () => {
   const userInfo = ref();
 
-  const getUserInfo = async (token:string | undefined | null)=>{
+  const getUserInfo = async ()=>{
     try{
-      if(token == 'undefined' || token == 'null' || !token) return  null;
-      const ret:any = await userInfoByToken({token});
+      const ret:any = await getCurrentUser();
       if(!ret.error) return ret?.data;
       return null;
     }catch(err){

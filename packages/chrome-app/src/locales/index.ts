@@ -1,13 +1,11 @@
-import { mode } from '@/service/index';
-import  { Utils,domainURLEnum } from '@toolkit';
+import { initLocale,constants } from 'toolkit';
+import getEnv from "@/utils/getEnv";
 
-const langKeys = Utils.langKeys;
-const { i18n,useI18n }:any = await Utils.initVueI18n(domainURLEnum[mode]);
+const langKeys = constants.langKeys;
+const env = getEnv();
+
+const { i18n,useI18n } = await initLocale(env);
+
 export default i18n;
-
-
-export {
-    useI18n,
-    langKeys
-}
+export { useI18n,langKeys };
 

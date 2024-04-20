@@ -1,37 +1,37 @@
 {
-  "name": "@toolkit",
+  "name": "toolkit",
   "version": "1.0.0",
   "private": true,
-  "main": "./src/index.ts",
+  "main": "dist/toolkit.mjs",
+  "module": "dist/toolkit.mjs",
+  "browser": "dist/toolkit.umd.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check build-only",
-    "preview": "vite preview",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+    "lint": "eslint --ext .ts src",
+    "format": "npm run lint --fix",
+    "test": "jest",
+    "build:lib": "rimraf lib && tsc --outDir lib --emitDeclarationOnly false --declarationDir lib",
+    "build:es": "rimraf es && tsc -m esNext --outDir es  --emitDeclarationOnly false --declarationDir es",
+    "build": "rimraf dist && vite build && tsc",
+    "build:watch": "rimraf dist && vite build --watch",
+    "rebirth": "npm run lint && npm run test && npm run build"
   },
   "dependencies": {
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.5.0",
+    "dayjs": "^1.11.10",
     "socket.io-client": "^4.7.2",
     "sortablejs": "^1.15.0",
-    "unplugin-auto-import": "^0.17.1",
-    "unplugin-vue-components": "^0.25.2",
-    "vue": "^3.3.4",
-    "vue-i18n": "^9.3.0-beta.25",
-    "vue-virtual-scroller": "^2.0.0-beta.3",
-    "vue3-tree": "^0.11.5",
-    "vuedraggable": "^4.1.0"
+    "vue-i18n": "^9.3.0-beta.25"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
     "@types/node": "^18.17.5",
-    "@vitejs/plugin-vue": "^4.3.1",
-    "@vue/tsconfig": "^0.4.0",
     "npm-run-all": "^4.1.5",
+    "rimraf": "^5.0.5",
     "typescript": "~5.1.6",
-    "vite": "^4.4.9",
-    "vue-tsc": "^1.8.8"
+    "vite": "^4.4.9"
   }
 }

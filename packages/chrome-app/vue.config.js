@@ -33,7 +33,8 @@ chromeName.forEach((name) => {
 })
 
 // 生成manifest文件
-const mode = process.env.VUE_APP_MODE.toLowerCase()
+const mode = process.env.VUE_APP_MODE.toLowerCase();
+
 const manifest = {
   from: path.resolve('./manifest/manifest.production.json'),
   to: `${path.resolve('dist')}/manifest.json`,
@@ -79,11 +80,11 @@ module.exports = {
       filename: '[name].js',
     },
     plugins,
-    resolve: {
-      alias: {
-        'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js'
-      }
-    },
+    // resolve: {
+    //   alias: {
+    //     'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js'
+    //   }
+    // },
   },
   css: {
     extract: {
@@ -113,6 +114,5 @@ module.exports = {
         .plugin('webpack-bundle-analyzer')
         .use(webpackBundleAnalyzer.BundleAnalyzerPlugin)
     }
-    config.resolve.alias.set('@toolkit',path.resolve(__dirname,'../toolkit'))
   },
 }

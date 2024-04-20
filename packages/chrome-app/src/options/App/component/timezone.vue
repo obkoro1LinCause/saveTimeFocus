@@ -16,11 +16,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch,defineProps, computed,defineEmits } from 'vue';
-import { Utils } from '@toolkit';
-
+import { ref, watch,defineProps, computed,defineEmits,getCurrentInstance } from 'vue';
 
 const emits = defineEmits(['update:modelValue']);
+const { appContext }:any = getCurrentInstance();
+const configMethods = appContext.config.globalProperties; 
+
+console.log('===getCurrentInstance===',configMethods)
 
 const props = defineProps({
     modelValue:{
@@ -33,7 +35,7 @@ const selectValue = ref();
 const selectRef = ref();
 
 const list = computed(()=>{
-    return Utils.timezoneList || [];
+    return configMethods.dayPlugin?.timezoneList|| [];
 });
 
 const handleChange = (value:any)=>{

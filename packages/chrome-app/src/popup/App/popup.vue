@@ -11,7 +11,6 @@
 import { HomeOutlined } from '@ant-design/icons-vue';
 import { handlerWindow } from '../../utils/creatWindow';
 import { RouterLink, RouterView, useRoute, useRouter} from 'vue-router';
-// import { Utils } from '@toolkit';
 import { getCurrentInstance } from 'vue';
 import NET from '../../utils/net';
 import { utils } from '@/utils/index';

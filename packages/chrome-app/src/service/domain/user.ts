@@ -5,8 +5,8 @@ export const userLogin = (params:any)=>{
 }
 
 
-export const userLogout = (params:any)=>{
-    return service.get(`/focus_sys/user_logout?email=${params.email}`);
+export const userLogout = ()=>{
+    return service.get(`/focus_sys/user_logout`);
 }
 
 export const userRegister = (params:any)=>{
@@ -14,12 +14,12 @@ export const userRegister = (params:any)=>{
 }
 
 export const userChangePassword = (params:any)=>{
-    return service.post('/focus_sys/user_change_password',params);
+    return service.post('/focus_sys/change_password',params);
 }
 
 
 export const userSendEmail = (params:any)=>{
-    return service.get(`/focus_sys/user_email_code?email=${params.email}`)
+    return service.get(`/focus_sys/email_code?email=${params.email}`)
 }
 
 export const userList = ()=>{
@@ -30,8 +30,8 @@ export const userInfo = (params:any)=>{
     return service.post(`/focus_sys/user`,params);
 }
 
-export const userInfoByToken = (params:any)=>{
-    return service.get(`/focus_sys/user_by_token?token=${params.token}`);
+export const getCurrentUser = ()=>{
+    return service.get(`/focus_sys/current_user`);
 }
 
 

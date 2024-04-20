@@ -1,1 +1,1 @@
-declare module '../../toolkit';
+declare module 'toolkit';

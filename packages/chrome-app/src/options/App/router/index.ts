@@ -55,9 +55,9 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const lang = i18n.global.locale.value;
-  const userStore = useUserStore()
-  const token = localStorage.getItem('user-token');
-  const user = await userStore.getUserInfo(token);
+  const userStore = useUserStore();
+  // 这个接口什么时候调用比较好，待确认
+  const user = await userStore.getUserInfo();
 
   if(to?.fullPath?.includes('user') && !user){
     return next();

@@ -1,11 +1,24 @@
 {
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    },
-    {
-      "path": "./tsconfig.app.json"
-    }
-  ]
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["ES5", "ES6","ES7","DOM","es2017"],
+    "strict": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "declaration": true,
+    "emitDeclarationOnly":true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "declarationDir": "dist", // 声明文件输出的目录
+    // "types": ["vite/client"] 
+  },
+  "exclude": ["node_modules", "lib", "es", "tests"],
+  "include":["src"]
 }

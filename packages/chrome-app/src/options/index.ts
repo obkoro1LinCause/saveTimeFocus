@@ -5,7 +5,7 @@ import GlobalPlugin from '@/utils';
 import router from './App/router';
 import i18n from '@/locales';
 import Antd from 'ant-design-vue';
-import directives from './App/directive/tooltip'
+import directives from './App/directive/tooltip';
 
 import 'ant-design-vue/dist/reset.css';
 import '@/styles/index.scss';
@@ -21,8 +21,8 @@ app.use(directives)
 
 app.mount('#app');
 
-export default app;
 
+export default app;
 
 
 

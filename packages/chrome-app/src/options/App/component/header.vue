@@ -25,10 +25,7 @@
     <div class="none-user" v-else>
       <div class="user-lt">
           <span class="title">SAVETIMEFOCUS</span>
-          <span 
-            v-if="showEntrance"
-            @click="onClick('push')" style="color:red"
-          >登录 ｜ 注册</span>
+          <span @click="onClick('push')" style="color:red"  v-if="showEntrance">登录 ｜ 注册</span>
       </div>
       <div class="user-rt">
          <a-button size="small" @click="onClick('lang')">{{ lang }}</a-button>
