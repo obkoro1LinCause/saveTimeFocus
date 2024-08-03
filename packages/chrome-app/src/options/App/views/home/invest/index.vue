@@ -1,65 +1,117 @@
 
 <template>
-    <div class="life-main flex">
-    </div>
+  <div  class="h-full">
+    <splitpanes class="default-theme">
+      <pane min-size="30">
+        <div class="mt-5 mb-12">
+          <CardList 
+            v-for="(_,key) in CardInfo" 
+            :key="key" :type="key"  
+            :listMap="CardInfo[key]"
+          ></CardList>
+        </div>
+      </pane>
+      <pane min-size="50">
+        <div class="flex justify-between items-center bg-white header">
+            <span></span>
+            <a-radio-group v-model:value="typeVal" @change="onChange">
+              <a-radio-button v-for="(item,index) in typeGroups" :key="index" :value="item.value">{{ item.label}}</a-radio-button>
+            </a-radio-group>
+            <PlusOutlined @click="onClick('create')" class="cursor-default text-16px font-900 c-blue"/>
+          </div>
+        <div v-if="!showEmpty">
+          <template v-for="(item,index) in taskList" :key="index">
+            <TaskList :task-item="item" :type-value="typeVal"></TaskList>
+          </template>
+        </div>
+        <div class="flex justify-center h-full items-center" v-else>
+          <a-empty :image="simpleImage" :description="descStatus"/>
+        </div>
+      </pane>
+    </splitpanes>
+    <ModalCreate v-model="createVisible" v-if="createVisible"></ModalCreate>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch,defineProps } from 'vue';
+import { ref, watch,defineProps, computed } from 'vue';
 import { useRoute } from 'vue-router';
+import { Splitpanes, Pane } from 'splitpanes'
+import ModalCreate from './modalCreate.vue';
+import { LikeOutlined } from '@ant-design/icons-vue'
+import 'splitpanes/dist/splitpanes.css';
+import CardList from './components/card/cardList.vue';
+import { CardInfo } from './components/card/type';
+import { PlusOutlined } from "@ant-design/icons-vue";
+import { Empty } from 'ant-design-vue';
+import TaskList from './components/task/taskList.vue';
+import { type TTaskList, taskListcons } from './components/task/type';
+
+const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
 const route = useRoute();
 
-const props = defineProps({
-    pageName:{
-        type:String,
-        default:''
-    }
+const props = defineProps({});
+const containerRef = ref()
+const createVisible = ref(false);
+const typeVal = ref('investing');
+const typeGroups = ref([
+  {
+    label:'投资中',
+    value:'investing',
+  },
+  {
+    label:'规划中',
+    value:'planning',
+  },
+  {
+    label:'已归档',
+    value:'closed',
+  }
+]);
+const typeValMap = ref({
+  investing:[],
+  planning:[],
+  closed:[]
 });
-const visible = ref(false);
+const taskList = ref(taskListcons);
 
-const getPageData =(id:any)=>{
-    if(!id) return;
-    console.log(id);
-}
-
-const onClick = (item:any)=>{
-    visible.value = true;
-    console.log(item,'---item---')
-}
-
-watch(()=>route?.params,(nv)=>{
-    getPageData(nv?.id)
-},{
-    immediate:true,
-    deep:true
+const showEmpty = computed(()=>{
+  return !(typeValMap.value[typeVal.value]?.length || true);
 })
+const descStatus = computed(() => {
+  if (['investing','planning','closed'].includes(typeVal.value) && !typeValMap.value.investing?.length && !typeValMap.value.planning?.length) { return '点击右上角创建按钮，创建投资时间目标做时间的朋友。' };
+  if (typeVal.value === 'investing' && typeValMap.value.planning?.length) { return '投资目标已完成，前往规划中，开启新的投资时间目标吧。' };
+  if (typeVal.value === 'planning' && !typeValMap.value.planning?.length) { return '暂无规划中投资计划，创建更多投资时间目标，改变你的人生。' };
+  if (typeVal.value === 'closed' && !typeValMap.value.closed?.length ) { return '完成目标后，设置为已归档，保存投资时间成果。'};
+  return '';
+});
 
+const onChange = (item)=>{
+  console.log(typeVal.value,item,'==item==');
+}
+const onClick = (type:'create')=>{
+  if(type === 'create'){
+    createVisible.value = true;
+  }
+}
 </script>
 
 
 <style scoped lang="scss">
-.todo-main{
+.invest-main{
   height: 100%;
 }
-.header{
-    justify-content: space-between;
+.splitpanes {
+  background: #fff;
 }
 
-.todo-lt{
-    padding: 20px;
-    max-height:calc(100% - 20px);
+.splitpanes.default-theme .splitpanes__pane {
+    background-color: #fff;
     overflow: auto;
 }
-.page-lt{
 
-}
-.todo-rt{
-    width: 300px;
-    background: #fff;
-    margin-right: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    padding: 10px;
+.header{
+  height: 65px;
+  padding: 20px;
 }
 </style>

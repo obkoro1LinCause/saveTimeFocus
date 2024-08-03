@@ -1,5 +1,6 @@
-import { TLangKeys } from './constant'
+import { TLangKeys,TWebsites } from './constant'
 
-declare namespace constants{
+declare namespace constants {
     const langKeys:TLangKeys
+    const websites:TWebsites
 }

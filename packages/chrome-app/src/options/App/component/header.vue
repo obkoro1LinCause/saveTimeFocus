@@ -1,112 +1,148 @@
 <template>
   <div class="header">
     <div class="has-user" v-if="userInfo">
-        <div class="user-lt">
-          <span class="title">SAVETIMEFOCUS</span>
-        </div>
-        <div class="user-rt flex">
-          <a-dropdown placement="bottom">
-              <div>
-                <UserOutlined :style="{fontSize: '18px', color: '#08c'}"/>
-                <span>{{userInfo?.name}}</span>
-              </div>
-              <template #overlay>
-                <a-menu @click="onMenuClick">
-                  <a-menuItem key="1">
-                    <span>{{ userInfo.email }}</span>
-                  </a-menuItem>
-                  <a-menuItem key="2">{{ tm('exit') }}</a-menuItem>
-                </a-menu>
-              </template>
-          </a-dropdown>
-          <a-button size="small" @click="onClick('lang')" class="ml-8">{{ lang }}</a-button>
-        </div>
+      <div class="user-lt">
+        <span class="title">SAVETIMEFOCUS</span>
+        <span>{{ userInfo.email }}</span>
+      </div>
+      <div class="user-rt flex">
+        <a-dropdown placement="bottom" class="mr-6">
+          <template #overlay>
+            <a-menu @click="onMenuClick">
+              <a-menuItem key="2">{{ tm("logout") }}</a-menuItem>
+            </a-menu>
+          </template>
+          <a-button size="small">
+             <span>{{ userInfo?.name || 'XXX' }}</span>
+             <UserOutlined :style="{ fontSize: '16px', color: '#08c' }" />
+          </a-button>
+        </a-dropdown>
+        <a-dropdown>
+          <template #overlay>
+            <a-menu @click="handleMenuClick">
+              <a-menu-item v-for="item in langList" :key="item.key">
+                <span>{{ item.value }}</span>
+              </a-menu-item>
+            </a-menu>
+          </template>
+          <a-button size="small"> {{ langText }}<DownOutlined /></a-button>
+        </a-dropdown>
+      </div>
     </div>
     <div class="none-user" v-else>
       <div class="user-lt">
-          <span class="title">SAVETIMEFOCUS</span>
-          <span @click="onClick('push')" style="color:red"  v-if="showEntrance">登录 ｜ 注册</span>
+        <span class="title">SAVETIMEFOCUS</span>
+        <span @click="onClick('push')" style="color: red" v-if="showEntrance">{{ tm('loginOrSign')}}</span>
       </div>
       <div class="user-rt">
-         <a-button size="small" @click="onClick('lang')">{{ lang }}</a-button>
+        <a-dropdown>
+          <template #overlay>
+            <a-menu @click="handleMenuClick">
+              <a-menu-item v-for="item in langList" :key="item.key">
+                <span>{{ item.value }}</span>
+              </a-menu-item>
+            </a-menu>
+          </template>
+          <a-button>{{ langText }}<DownOutlined /></a-button>
+        </a-dropdown>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, nextTick, ref, computed, onMounted,defineEmits,getCurrentInstance } from "vue";
-import { UserOutlined } from '@ant-design/icons-vue';
-import { useRoute } from 'vue-router';
-import { useI18n } from '@/locales';
+import {
+  defineComponent,
+  nextTick,
+  ref,
+  computed,
+  onMounted,
+  defineEmits,
+  getCurrentInstance,
+} from "vue";
+import { UserOutlined,DownOutlined } from "@ant-design/icons-vue";
+import { useRoute } from "vue-router";
+import { useI18n } from "@/locales";
 
 export default defineComponent({
   name: "Header",
-  components:{UserOutlined},
+  components: { UserOutlined,DownOutlined },
   props: {
-    userInfo:{
-      type:Object,
-      default:null
+    userInfo: {
+      type: Object,
+      default: null,
     },
   },
   setup(props, ctx) {
     const route = useRoute();
-    const { tm }:any = useI18n();
-    const lang = ref(tm('lang'));
+    const { tm }  = useI18n();
+
+    const langList = ref([
+      {
+        value: "English",
+        key:'en'
+      },
+      {
+        value: "中文",
+        key:'zh'
+      },
+    ]);
+
+    const langText = computed(()=>{
+      return langList.value.find((item)=>item.key === tm("lang"))?.value
+    })
+
     // 展示登录｜注册
-    const showEntrance = computed(()=>{
-      if(route.path.includes('/app/user')) return false;
-      if(!props.userInfo) return true;
+    const showEntrance = computed(() => {
+      if (route.path.includes("/app/user")) return false;
+      if (!props.userInfo) return true;
       return false;
     });
-    const onClick = (type:string)=>{
-      if(type === 'push'){
-        ctx.emit('goTo');
-      }else if(type == 'lang'){
-        if(lang.value !== 'zh'){
-          lang.value = 'zh';
-        }else{
-          lang.value = 'en';
-        }
-        ctx.emit('setLang',lang.value)
-      }
-    }
-    const onMenuClick = (e:any)=>{
-      ctx.emit('menuClick',e);
-    }
+
+    const handleMenuClick = (item:any) => {
+      ctx.emit("setLang", item.key);
+    };
+    const onClick = (type: string) => {
+      ctx.emit("goTo");
+    };
+    const onMenuClick = (e:any) => {
+      ctx.emit("menuClick", e);
+    };
     return {
       onClick,
-      lang,
       onMenuClick,
       showEntrance,
       tm,
+      langList,
+      langText,
+      handleMenuClick,
     };
   },
 });
-
 </script>
 
 <style scoped lang="scss">
-.header{
+.header {
   width: 100%;
   border-bottom: 1px solid #ccc;
 }
-.title{
+.title {
   font-weight: 600;
   font-size: 16px;
   margin-right: 10px;
 }
 
-.has-user,.none-user{
+.has-user,
+.none-user {
   width: 100%;
   padding: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.user-lt{
+.user-lt {
   cursor: pointer;
 }
-.user-rt{
+.user-rt {
   align-items: center;
 }
 </style>

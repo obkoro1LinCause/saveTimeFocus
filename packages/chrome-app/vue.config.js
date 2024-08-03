@@ -4,6 +4,7 @@ const webpackBundleAnalyzer = require('webpack-bundle-analyzer')
 const path = require('path')
 const dotenv = require('dotenv')
 const dotenvExpand = require('dotenv-expand')
+// const unocss = require('@unocss/webpack');
 
 const envPath = {
   productionChrome: './config/env/.env.productionChrome',
@@ -67,52 +68,112 @@ if (process.env.NODE_ENV !== 'serve') {
   )
 }
 
-module.exports = {
-  pages: pagesObj,
-  productionSourceMap: false,
-  configureWebpack: {
-    devtool: 'inline-source-map',
-    entry: {
-      content: './src/content/index.ts',
-      background: './src/background/index.ts',
-    },
-    output: {
-      filename: '[name].js',
-    },
-    plugins,
-    // resolve: {
-    //   alias: {
-    //     'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js'
-    //   }
-    // },
-  },
-  css: {
-    extract: {
-      filename: 'css/[name].css',
-    },
-  },
+// module.exports = {
+  // pages: pagesObj,
+  // productionSourceMap: false,
+  // configureWebpack: {
+  //   devtool: 'inline-source-map',
+  //   entry: {
+  //     content: './src/content/index.ts',
+  //     background: './src/background/index.ts',
+  //   },
+  //   output: {
+  //     filename: '[name].js',
+  //   },
+  //   plugins,
+  //   // resolve: {
+  //   //   alias: {
+  //   //     'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js'
+  //   //   }
+  //   // },
+  // },
+  // css: {
+  //   extract: {
+  //     filename: 'css/[name].[hash:9].css',
+  //   },
+  // },
 
-  chainWebpack: (config) => {
-    // 处理字体文件名，去除hash值
-    const fontsRule = config.module.rule('fonts')
-    config.resolve.alias.set('@', path.resolve(__dirname, 'src'))
-    // 清除已有的所有 loader。
-    // 如果你不这样做，接下来的 loader 会附加在该规则现有的 loader 之后。
-    fontsRule.uses.clear()
-    fontsRule
-      .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
-      .use('url')
-      .loader('url-loader')
-      .options({
-        limit: 1000,
-        name: 'fonts/[name].[ext]',
-      })
+  // chainWebpack: (config) => {
+  //   // 处理字体文件名，去除hash值
+  //   const fontsRule = config.module.rule('fonts')
+  //   config.resolve.alias.set('@', path.resolve(__dirname, 'src'))
+  //   // 清除已有的所有 loader。
+  //   // 如果你不这样做，接下来的 loader 会附加在该规则现有的 loader 之后。
+  //   fontsRule.uses.clear()
+  //   fontsRule
+  //     .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
+  //     .use('url')
+  //     .loader('url-loader')
+  //     .options({
+  //       limit: 1000,
+  //       name: 'fonts/[name].[ext]',
+  //     })
 
-    // 查看打包组件大小情况
-    if (process.env.npm_config_report) {
-      config
-        .plugin('webpack-bundle-analyzer')
-        .use(webpackBundleAnalyzer.BundleAnalyzerPlugin)
+  //   // 查看打包组件大小情况
+  //   if (process.env.npm_config_report) {
+  //     config
+  //       .plugin('webpack-bundle-analyzer')
+  //       .use(webpackBundleAnalyzer.BundleAnalyzerPlugin)
+  //   }
+  // },
+// }
+
+
+
+module.exports = function () {
+  return import('@unocss/webpack').then((m) => {
+    const UnoCSS = m.default
+    return {
+      pages: pagesObj,
+      productionSourceMap: false,
+      configureWebpack: {
+        devtool: 'inline-source-map',
+        entry: {
+          content: './src/content/index.ts',
+          background: './src/background/index.ts',
+        },
+        output: {
+          filename: '[name].js',
+        },
+        plugins:[
+          ...plugins,
+          new UnoCSS(),
+        ],
+        // resolve: {
+        //   alias: {
+        //     'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js'
+        //   }
+        // },
+      },
+      css: {
+        extract: {
+          filename: 'css/[name].css',
+        },
+      },
+    
+      chainWebpack: (config) => {
+        // 处理字体文件名，去除hash值
+        const fontsRule = config.module.rule('fonts')
+        config.resolve.alias.set('@', path.resolve(__dirname, 'src'))
+        // 清除已有的所有 loader。
+        // 如果你不这样做，接下来的 loader 会附加在该规则现有的 loader 之后。
+        fontsRule.uses.clear()
+        fontsRule
+          .test(/\.(woff2?|eot|ttf|otf)(\?.*)?$/i)
+          .use('url')
+          .loader('url-loader')
+          .options({
+            limit: 1000,
+            name: 'fonts/[name].[ext]',
+          })
+    
+        // 查看打包组件大小情况
+        if (process.env.npm_config_report) {
+          config
+            .plugin('webpack-bundle-analyzer')
+            .use(webpackBundleAnalyzer.BundleAnalyzerPlugin)
+        }
+      },
     }
-  },
+  })
 }

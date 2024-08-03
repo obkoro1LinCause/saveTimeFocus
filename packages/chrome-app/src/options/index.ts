@@ -5,10 +5,12 @@ import GlobalPlugin from '@/utils';
 import router from './App/router';
 import i18n from '@/locales';
 import Antd from 'ant-design-vue';
-import directives from './App/directive/tooltip';
+import loadingDirective from './App/directive/loading';
 
 import 'ant-design-vue/dist/reset.css';
 import '@/styles/index.scss';
+
+import 'uno.css';
 
 const app = createApp(App);
 
@@ -17,7 +19,7 @@ app.use(GlobalPlugin)
 app.use(Antd)
 app.use(router)
 app.use(createPinia())
-app.use(directives)
+app.use(loadingDirective)
 
 app.mount('#app');
 

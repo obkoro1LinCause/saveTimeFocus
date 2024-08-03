@@ -1,0 +1,34 @@
+export const taskAtions = [
+  {
+    value:1,
+    name:'投资经历分享'
+  },
+  {
+    value:2,
+    name:'投资时间详情'
+  },
+  {
+    value:3,
+    name:'投资时间补记'
+  },
+  {
+    value:4,
+    name:'归档'
+  },
+  {
+    value:5,
+    name:'上移'
+  },
+  {
+    value:6,
+    name:'下移'
+  },
+  {
+    value:7,
+    name:'置顶'
+  },
+  {
+    value:8,
+    name:'置底'
+  },
+];

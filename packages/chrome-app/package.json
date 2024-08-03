@@ -18,10 +18,14 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
+    "@unocss/webpack": "^0.60.4",
+    "@vueuse/core": "^10.9.0",
     "ant-design-vue": "^4.1.2",
     "babel-plugin-component": "^1.1.1",
     "core-js": "^3.32.0",
     "pinia": "^2.1.7",
+    "splitpanes": "^3.1.0",
+    "unocss": "^0.60.4",
     "vue": "^3.3.4",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"

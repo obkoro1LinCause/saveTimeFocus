@@ -2,17 +2,17 @@
 <div class="home">
     <Sidebar @click="sidebarClick"></Sidebar>
     <div class="content">
-        <!-- <span> {{ currentRoute.name }} </span> -->
         <router-view></router-view>
     </div>
 </div>
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps,reactive,getCurrentInstance} from "vue";
+import { ref, watch, defineProps,reactive,getCurrentInstance, onMounted} from "vue";
 import { useRouter,useRoute } from 'vue-router';
 import { useI18n } from '@/locales';
-import Sidebar from '../../component/sidebar.vue'
+import Sidebar from '../../component/sidebar.vue';
+import { useUserStore } from '../../stores/user';
 
 const router = useRouter();
 const route = useRoute();
@@ -22,8 +22,14 @@ const configMethods = appContext.config.globalProperties;
 const { tm, locale  } = useI18n();
 
 
+onMounted(async ()=>{
+    const userStore = useUserStore();
+    const user = await userStore.getUserInfo();
+    userStore.setUser(user);
+})
+
+
 const sidebarClick = (item)=>{
-    // currentItem.value = item;
     router.push({
         name:item.name,
         params:{

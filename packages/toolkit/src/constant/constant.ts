@@ -5,9 +5,15 @@ export interface ILangKey {
     label:string
 }
 export type TLangKeys = ILangKey[];
-
+export interface IWekeys {
+    label:string,
+    value:string,
+    checked:boolean,
+};
+export type TWebsites = IWekeys [];
 export interface IConstants {
-    langKeys:TLangKeys
+    langKeys:TLangKeys,
+    websites:TWebsites
 }
 
 
@@ -16,6 +22,153 @@ const constants:IConstants = {
         { value: "zh", label: "简体中文" },
         { value: "en", label: "English" },
     ],
+    websites:[
+        {
+            label:'reddit.com',
+            value:'reddit.com',
+            checked:false
+        },
+        {
+            label:'youtube.com',
+            value:'youtube.com',
+            checked:false,
+        },
+        {
+            label:'tiktok.com',
+            value:'tiktok.com',
+            checked:false,
+        },
+        {
+            label:'netflix.com',
+            value:'netflix.com',
+            checked:false,
+        },
+        {
+            label:'facebook.com',
+            value:'facebook.com',
+            checked:false,
+        },
+        {
+            label:'amazon.com',
+            value:'amazon.com',
+            checked:false,
+        },
+        {
+            label:'instagram.com',
+            value:'instagram.com',
+            checked:false,
+        },
+        {
+            label:'buzzfeed.com',
+            value:'buzzfeed.com',
+            checked:false,
+        },
+        {
+            label:'twitter.com',
+            value:'twitter.com',
+            checked:false,
+        },
+        {
+            label:'pinterest.com',
+            value:'pinterest.com',
+            checked:false
+        },
+        {
+            label:'forbes.com',
+            value:'forbes.com',
+            checked:false
+        },
+        {
+            label:'linkedin.com',
+            value:'linkedin.com',
+            checked:false
+        },
+        {
+            label:'ft.com',
+            value:'ft.com',
+            checked:false
+        },
+        {
+            label:'businessinsider.com',
+            value:'businessinsider.com',
+            checked:false
+        },
+        {
+            label:'cnbc.com',
+            value:'cnbc.com',
+            checked:false
+        },
+        {
+            label:'huffpost.com',
+            value:'huffpost.com',
+            checked:false
+        },
+        {
+            label:'people.com',
+            value:'people.com',
+            checked:false
+        },
+        {
+            label:'bbc.com',
+            value:'bbc.com',
+            checked:false
+        },
+        {
+            label:'rollingstone.com',
+            value:'rollingstone.com',
+            checked:false
+        },
+        {
+            label:'ew.com',
+            value:'ew.com',
+            checked:false
+        },
+        {
+            label:'time.com',
+            value:'time.com',
+            checked:false
+        },
+        {
+            label:'pitchfork.com',
+            value:'pitchfork.com',
+            checked:false
+        },
+        {
+            label:'variety.com',
+            value:'variety.com',
+            checked:false
+        },
+        {
+            label:'allmusic.com',
+            value:'allmusic.com',
+            checked:false
+        },
+        {
+            label:'vulture.com',
+            value:'vulture.com',
+            checked:false
+        },
+        {
+            label:'ebay.com',
+            value:'ebay.com',
+            checked:false
+        },
+        {
+            label:'etsy.com',
+            value:'etsy.com',
+            checked:false
+        },
+        {
+            label:'espn.com',
+            value:'espn.com',
+            checked:false
+        },
+        {
+            label:'vice.com',
+            value:'vice.com',
+            checked:false
+        }
+    ]
 }
 
 

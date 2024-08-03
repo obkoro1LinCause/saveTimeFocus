@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { useUserStore } from '../stores/user';
 import i18n from '@/locales/index';
 
 const router = createRouter({
@@ -15,6 +14,11 @@ const router = createRouter({
       component: () => import('../views/home/index.vue'),
       redirect:'/app/home/life/:lang',
       children:[
+        {
+          path: '/app/home/block/:lang',
+          component: () => import('../views/home/block/index.vue'),
+          name:'BlockPage'
+        },
         {
           path: '/app/home/life/:lang',
           component: () => import('../views/home/life/index.vue'),
@@ -53,26 +57,23 @@ const router = createRouter({
 });
 
 
-router.beforeEach(async (to, from, next) => {
-  const lang = i18n.global.locale.value;
-  const userStore = useUserStore();
-  // 这个接口什么时候调用比较好，待确认
-  const user = await userStore.getUserInfo();
+// router.beforeEach(async (to, from, next) => {
+//   const lang = i18n.global.locale.value;
+//   const token = localStorage.getItem('user-token');
 
-  if(to?.fullPath?.includes('user') && !user){
-    return next();
-  }else if(!to?.fullPath?.includes('user') && !user){
-    return next({
-      name:'LoginOrSignPage',
-      params:{
-        lang
-      }
-    })
-  }else{
-    userStore.setUser(user);
-    return next();
-  }
-})
+//   if(to?.fullPath?.includes('user') && !token){
+//     return next();
+//   }else if(!to?.fullPath?.includes('user') && !token){
+//     return next({
+//       name:'LoginOrSignPage',
+//       params:{
+//         lang
+//       }
+//     })
+//   }else{
+//     return next();
+//   }
+// })
 
 
 export default router;
