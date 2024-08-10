@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted, PropType } from "vue";
 import TaskCard from './taskCard.vue';
-import { TTaskMap } from './type'
+import { type TTaskMap } from './type'
 
 const props = defineProps({
   taskItem:{
@@ -30,8 +30,5 @@ const props = defineProps({
 });
 
 const taskCardMap = ref(props.taskItem);
-const taskCardValue = ref({});
-
-console.log(taskCardMap,'==taskCardMap==')
 </script>
 

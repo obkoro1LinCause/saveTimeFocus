@@ -1,6 +1,6 @@
 
 <template>
-  <div class="p-2"  :style="style"> 
+  <div class="p-2 task-card"  :style="style"> 
     <div class="card-header flex justify-between">
       <div class="flex flex-col w-40">
         <Tooltip :title="taskCard?.title ||'任务名称任务名称任务名称任务名称任务名'" :text="taskCard?.title ||'任务名称任务名称任务名称任务名称任务名'"></Tooltip>
@@ -21,9 +21,11 @@
       </div>
       <div class="flex">
         <div class="flex flex-col justify-center items-center mr-1">
-           <a-button class="cursor-pointer w-20" type="primary" size="small" @click="onClickInvite('start')" v-if="showStartBtn">开始投资</a-button>
-           <a-button class="cursor-pointer w-20" type="primary" size="small" @click="onClickInvite('open')" v-else>开启投资</a-button>
-           <Tooltip :title="statesTip" v-if="true" placement="bottom" :text="statesText" class="mt-2"></Tooltip>
+           <a-button class="cursor-pointer w-20" type="primary" size="small" @click="onClickInvite(ModalEventNameEnum.START)" v-if="showStartBtn">开始投资</a-button>
+           <a-button class="cursor-pointer w-20" type="primary" size="small" @click="onClickInvite(ModalEventNameEnum.OPEN)" v-else-if="showOpenBtn">开启投资</a-button>
+           <a-button class="cursor-pointer w-20" type="primary" size="small" @click="onClickInvite(ModalEventNameEnum.UNCLOSED)" v-else-if="showClosedBtn">已归档</a-button>
+           <!-- 提示 -->
+           <Tooltip v-if="!!statesText" :title="statesTip"  placement="bottom" :text="statesText" class="mt-2"></Tooltip>
         </div>
         <a-popover v-model:open="visible"  trigger="click">
           <template #content>
@@ -43,17 +45,18 @@
     </div>
     <div class="card-content flex flex-wrap justify-between my-3 text-14px">
       <template v-for="(item) in taskCard.options" :key="item.label">
-        <div class="flex flex-col w-50% my-2">
-          <p>{{ item?.formatter ? item.formatter(taskCard?.source) : item.value || '--' }}</p>
+        <div class="flex flex-col w-50% my-2" v-if="item?.display?.(taskCard?.source)">
+          <p>{{ item?.formatter ? item.formatter(taskCard?.source) : taskCard?.source?.[item.filed] || '--' }}</p>
           <p>{{ item.label }}</p>
         </div>
       </template>
     </div>
     <div class="flex">
        <template v-for="(item) in taskCard.components" :key="item.label">
-          <p>{{ item.label }}</p>
-          <component v-if="item.isComponent" :is="item.component" v-bind="item.props"></component>
-          <p v-html="item.component"></p>
+         <div class="flex flex-col" v-if="item?.display?.(taskCard?.source)">
+           <p>{{ item.label }}</p>
+            <component :is="item.component" v-bind="item.props"></component>
+         </div>
        </template>
     </div>
   </div>
@@ -62,9 +65,11 @@
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted, PropType, computed} from "vue";
 import { EllipsisOutlined } from '@ant-design/icons-vue'
-import { TTaskItemMap } from './type';
+import { TTaskItemMap,TaskStatusEnum,TaskStateMap,TaskStateEnum } from './type';
 import { taskAtions } from './constants';
 import Tooltip from '@/options/App/component/tooltip.vue';
+import emitter from '@/utils/emitter';
+import { ModalEventNameEnum } from '../modal/type';
 
 const props = defineProps({
   taskCard:{
@@ -84,20 +89,41 @@ const isChildTask = computed(()=>{
     return true;
 });
 
+// 是否显示投资时间按钮
+const showStartBtn =  computed(()=>{
+  return props?.taskCard?.source?.categorys?.includes(TaskStatusEnum.INVEST) || true;
+});
+
+/**
+ * 是否显示开启投资按钮
+ * 是规划中的分类标签 & 是未归档
+ **/ 
+const showOpenBtn =  computed(()=>{
+  return props?.taskCard?.source?.categorys?.includes(TaskStatusEnum.PLAN) && props?.taskCard?.source?.state === TaskStateEnum.NOCLOSED;
+});
+
+/**
+ * 是否显示已归档状态
+ * 已归档状态
+ */
+const showClosedBtn =  computed(()=>{
+  return props?.taskCard?.source?.state === TaskStateEnum.CLOSED;
+});
+
 // 过期时间文案
 const statesText = computed(()=>{
+  const bool = '没有截止日期不显示'
+  if(!bool) return;
   //  if(true) return `还剩多少天`;
   return `过期多少天`;
 });
-
-// 是否显示投资时间按钮
-const showStartBtn =  computed(()=>{
-  return false;
-});
-
 const statesTip = computed(()=>{
   return `时间投资目标截止日期为XXX，请注意时间`;
 });
+
+// 笑脸逻辑
+
+
 
 const visible = ref(false);
 const actions = ref(taskAtions);
@@ -143,7 +169,7 @@ const STagOptions = ref([
     type:'series',
     color:'cyan',
     title:'已达标x天，当前连续达标x天，最高连续达标x天',
-    show:true
+    show:!isChildTask.value
   },
   {
     label:'连续投资x天',
@@ -166,27 +192,25 @@ const onClickTag = (type:'total' | 'series')=>{
 }
 
 const onClickHandler = (item)=>{
-  console.log(item,'===item===');
   visible.value = false;
+  emitter.emit(item.event,props.taskCard);
 }
 
-const onClickInvite = (type:'start' | 'open')=>{
-  console.log(type,'===item===111');
+const onClickInvite = (type:ModalEventNameEnum)=>{
+  emitter.emit(type,props.taskCard);
 }
 
 
 </script>
 
 <style lang="scss" scoped>
-.card-container{
-
+.task-card:hover{
+  background: #f2f2f2;
 }
+
 .label{
   display: inline-block;
   max-width:200px;
-  // overflow: hidden;
-  // white-space: nowrap;
-  // text-overflow: ellipsis;
 }
 </style>
 

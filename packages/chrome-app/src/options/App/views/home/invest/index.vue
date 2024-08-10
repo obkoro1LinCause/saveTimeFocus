@@ -13,12 +13,12 @@
       </pane>
       <pane min-size="50">
         <div class="flex justify-between items-center bg-white header">
-            <span></span>
-            <a-radio-group v-model:value="typeVal" @change="onChange">
-              <a-radio-button v-for="(item,index) in typeGroups" :key="index" :value="item.value">{{ item.label}}</a-radio-button>
-            </a-radio-group>
-            <PlusOutlined @click="onClick('create')" class="cursor-default text-16px font-900 c-blue"/>
-          </div>
+          <span></span>
+          <a-radio-group v-model:value="typeVal" @change="onChange">
+            <a-radio-button v-for="(item,index) in typeGroups" :key="index" :value="item.value">{{ item.label}}</a-radio-button>
+          </a-radio-group>
+          <PlusOutlined @click="onClick('create')" class="cursor-default text-16px font-900 c-blue"/>
+        </div>
         <div v-if="!showEmpty">
           <template v-for="(item,index) in taskList" :key="index">
             <TaskList :task-item="item" :type-value="typeVal"></TaskList>
@@ -29,7 +29,8 @@
         </div>
       </pane>
     </splitpanes>
-    <ModalCreate v-model="createVisible" v-if="createVisible"></ModalCreate>
+    <ModalCreate v-model="createVisible"></ModalCreate>
+    <ModalContainer></ModalContainer>
   </div>
 </template>
 
@@ -37,7 +38,10 @@
 import { ref, watch,defineProps, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { Splitpanes, Pane } from 'splitpanes'
-import ModalCreate from './modalCreate.vue';
+import ModalCreate from './components/modal/modalCreate.vue';
+import ModalContainer from './components/modal/modalContainer.vue';
+// import ModalStart from './components/modal/modalStart.vue';
+
 import { LikeOutlined } from '@ant-design/icons-vue'
 import 'splitpanes/dist/splitpanes.css';
 import CardList from './components/card/cardList.vue';
@@ -45,7 +49,8 @@ import { CardInfo } from './components/card/type';
 import { PlusOutlined } from "@ant-design/icons-vue";
 import { Empty } from 'ant-design-vue';
 import TaskList from './components/task/taskList.vue';
-import { type TTaskList, taskListcons } from './components/task/type';
+import { type TTaskList } from './components/task/type';
+import { taskListcons } from './components/task/configure';
 
 const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;
 const route = useRoute();
@@ -111,7 +116,12 @@ const onClick = (type:'create')=>{
 }
 
 .header{
-  height: 65px;
+  height: 75px;
   padding: 20px;
+  min-width:50%;
+  position: sticky;
+  top: -1px;
+  background: #fff;
+  z-index: 10;
 }
 </style>
