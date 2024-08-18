@@ -76,6 +76,7 @@ const props = defineProps({
     type:Object as PropType<TTaskItemMap>,
     required:true,
   },
+  taskIndex:Number,
   style:Object,
 });
 
@@ -91,15 +92,17 @@ const isChildTask = computed(()=>{
 
 // 是否显示投资时间按钮
 const showStartBtn =  computed(()=>{
-  return props?.taskCard?.source?.categorys?.includes(TaskStatusEnum.INVEST) || true;
+  return false;
+  // return props?.taskCard?.source?.categorys?.includes(TaskStatusEnum.INVEST) || true;
 });
 
 /**
  * 是否显示开启投资按钮
- * 是规划中的分类标签 & 是未归档
+ * 是主任务 & 是规划中的分类标签 & 是未归档
  **/ 
 const showOpenBtn =  computed(()=>{
-  return props?.taskCard?.source?.categorys?.includes(TaskStatusEnum.PLAN) && props?.taskCard?.source?.state === TaskStateEnum.NOCLOSED;
+  return true;
+  // return props?.taskCard?.source?.categorys?.includes(TaskStatusEnum.PLAN) && props?.taskCard?.source?.state === TaskStateEnum.NOCLOSED;
 });
 
 /**
@@ -193,7 +196,17 @@ const onClickTag = (type:'total' | 'series')=>{
 
 const onClickHandler = (item)=>{
   visible.value = false;
-  emitter.emit(item.event,props.taskCard);
+  if(item?.event){
+    emitter.emit(item.event,props.taskCard);
+  }else if(item.value === 6){
+    console.log('==上移==');
+  }else if(item.value === 7){
+    console.log('==下移==');
+  }else if(item.value === 8){
+    console.log('==置顶==');
+  }else if(item.value === 9){
+    console.log('==置底==');
+  }
 }
 
 const onClickInvite = (type:ModalEventNameEnum)=>{

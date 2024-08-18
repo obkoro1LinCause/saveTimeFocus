@@ -7,6 +7,8 @@ export enum ModalEventNameEnum {
   CREATECHILD = 'CREATECHILD',
   SHARE = 'SHARE',
   RECORD = 'RECORD',
+  DELETE = 'DELETE',
+  DELETEChILD = 'DELETEChILD'
   // DETAIL = 'DETAIL',
   // UP = 'UP',
   // DOWN = 'DOWN',

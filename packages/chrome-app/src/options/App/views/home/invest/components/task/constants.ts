@@ -8,7 +8,7 @@ export const taskAtions = [
   {
     value:2,
     name:'投资时间详情',
-    event:'DETAIL'
+    // event:'DETAIL'
   },
   {
     value:3,
@@ -28,21 +28,26 @@ export const taskAtions = [
   {
     value:6,
     name:'上移',
-    event:'UP'
+    // event:'UP'
   },
   {
     value:7,
     name:'下移',
-    event:'DOWN'
+    // event:'DOWN'
   },
   {
     value:8,
     name:'置顶',
-    event:'TOP'
+    // event:'TOP'
   },
   {
     value:9,
     name:'置底',
-    event:'BOTTOM'
+    // event:'BOTTOM'
   },
+  {
+    value:10,
+    name:'删除',
+    event:ModalEventNameEnum.DELETE
+  }
 ];

@@ -1,6 +1,23 @@
 import { Component } from "vue";
 export type TaskStatus = 'investing' | 'planning' | 'closed';
 
+export enum TastFlagEnum {
+  'OPEN' = 1,
+  'CLOSED' = 0
+}
+
+export const TastFlags = [
+  {
+    label:'开启',
+    value:TastFlagEnum.OPEN
+  },
+  {
+    label:'关闭',
+    value:TastFlagEnum.CLOSED
+  },
+]
+
+
 export enum TaskStateEnum {
   CLOSED ='closed',
   NOCLOSED ='noclosed'

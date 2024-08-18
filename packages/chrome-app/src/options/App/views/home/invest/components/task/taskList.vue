@@ -3,13 +3,13 @@
   <div class="flex flex-col my-3 mx-3">
     <div class="main-task min-h-auto">
       <p class="my-3 font-900 text-16px">投资时间主任务</p>
-      <TaskCard :task-card="taskCardMap?.item"></TaskCard>
+      <TaskCard :task-card="taskCardMap?.item" :task-index="taskIndex"></TaskCard>
     </div>
     <div class="sub-task" v-if="!!taskCardMap?.children?.length">
       <p class="my-3 font-900 text-16px">投资时间子任务</p>
       <div class="flex flex-col flex-wrap justify-center">
         <template v-for="(item,index) in taskCardMap?.children" :key="index">
-           <TaskCard  class="m-3"  :task-card="item"></TaskCard>
+           <TaskCard  class="m-3"  :task-card="item" :task-index="index"></TaskCard>
         </template>
       </div>
     </div>
@@ -26,7 +26,7 @@ const props = defineProps({
     type:Object as PropType<TTaskMap>,
     required:true,
   },
-  typeValue:String
+  taskIndex:Number,
 });
 
 const taskCardMap = ref(props.taskItem);

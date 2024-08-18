@@ -8,6 +8,7 @@
         <TaskStart v-if="eventName === ModalEventNameEnum.START"></TaskStart>
         <TaskClosed v-if="eventName === ModalEventNameEnum.CLOSED"></TaskClosed>
         <TaskUnClosed v-if="eventName === ModalEventNameEnum.UNCLOSED"></TaskUnClosed>
+        <TaskDel v-if="eventName === ModalEventNameEnum.DELETE"></TaskDel>
       </div>
       <div class="footer">
           <a-button @click="handleCancel" size="large">取消</a-button>
@@ -22,6 +23,7 @@ import TaskOpen from './TaskOpen.vue';
 import TaskStart from './TaskStart.vue';
 import TaskClosed from './TaskClosed.vue';
 import TaskUnClosed from './TaskUnClosed.vue';
+import TaskDel from './TaskDel.vue';
 import { ModalEventNameEnum } from './type';
 
 const props = defineProps({
@@ -59,32 +61,45 @@ const handleCancel = ()=>{
    eventName.value = null;
 }
 
+// 事件开启弹框
 onMounted(()=>{
-  // 事件开启弹框
+  // 归档
   emitter.on(ModalEventNameEnum.CLOSED,(pars)=>{
     if(visible.value) return ;
     visible.value = true;
     eventName.value = ModalEventNameEnum.CLOSED;
-    console.log(pars,'==pars==')
   });
+  // 取消归档
   emitter.on(ModalEventNameEnum.UNCLOSED,(pars)=>{
     if(visible.value) return ;
     visible.value = true;
     eventName.value = ModalEventNameEnum.UNCLOSED;
-    console.log(pars,'==pars==')
   });
+  // 开启投资
   emitter.on(ModalEventNameEnum.OPEN,(pars)=>{
      if(visible.value) return ;
      visible.value = true;
      eventName.value = ModalEventNameEnum.OPEN;
-     console.log(pars,'==pars==')
   });
+  // 开始投资
   emitter.on(ModalEventNameEnum.START,(pars)=>{
      if(visible.value) return ;
      visible.value = true;
      eventName.value = ModalEventNameEnum.START;
-     console.log(pars,'==pars==')
   });
+  // 删除项目
+  emitter.on(ModalEventNameEnum.DELETE,(pars)=>{
+     if(visible.value) return ;
+     visible.value = true;
+     eventName.value = ModalEventNameEnum.DELETE;
+  });
+  // 删除子项目
+  emitter.on(ModalEventNameEnum.DELETEChILD, (pars)=>{
+    if(visible.value) return ;
+     visible.value = true;
+     eventName.value = ModalEventNameEnum.DELETEChILD;
+  });
+
 });
 
 onBeforeUnmount(()=>{
@@ -92,6 +107,8 @@ onBeforeUnmount(()=>{
   emitter.off(ModalEventNameEnum.UNCLOSED);
   emitter.off(ModalEventNameEnum.OPEN);
   emitter.off(ModalEventNameEnum.START);
+  emitter.off(ModalEventNameEnum.DELETE);
+  emitter.off(ModalEventNameEnum.DELETEChILD);
 });
 
 watch(()=>props.modelValue,(nv)=>{
