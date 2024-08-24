@@ -1,4 +1,4 @@
-import { type TTaskItemMap,type TTaskList } from './type';
+import { type TTaskItemMap,type TTaskList,type TConfigures } from '../components/task/type';
 
 export const TaskCard : TTaskItemMap = {
   title:'',
@@ -58,3 +58,4 @@ export const taskListcons : TTaskList = [
     ]
   }
 ];
+

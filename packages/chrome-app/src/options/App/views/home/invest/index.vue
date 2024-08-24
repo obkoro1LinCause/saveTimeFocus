@@ -41,7 +41,6 @@ import { Splitpanes, Pane } from 'splitpanes'
 import ModalCreate from './components/modal/modalCreate.vue';
 import ModalContainer from './components/modal/modalContainer.vue';
 
-import { LikeOutlined } from '@ant-design/icons-vue'
 import 'splitpanes/dist/splitpanes.css';
 import CardList from './components/card/cardList.vue';
 import { CardInfo } from './components/card/type';
@@ -49,7 +48,7 @@ import { PlusOutlined } from "@ant-design/icons-vue";
 import { Empty } from 'ant-design-vue';
 import TaskList from './components/task/taskList.vue';
 import { type TTaskList, TaskStatusMap, TaskStatusEnum } from './components/task/type';
-import { taskListcons } from './components/task/configure';
+import { taskListcons } from './config/list.config';
 import { useInvestModuleStore } from '@/options/App/stores/task';
 
 const simpleImage = Empty.PRESENTED_IMAGE_SIMPLE;

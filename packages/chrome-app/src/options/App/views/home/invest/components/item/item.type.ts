@@ -1,0 +1,1 @@
+export type TItem = 'plan' | 'expect'

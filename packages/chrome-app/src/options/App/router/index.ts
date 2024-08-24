@@ -27,7 +27,12 @@ const router = createRouter({
         {
           path: '/app/home/invest/:lang',
           component: () => import('../views/home/invest/index.vue'),
-          name:'InvestPage'
+          name:'InvestPage',
+        },
+        {
+          path: '/app/home/invest/detail/:lang',
+          component: () => import('../views/home/invest/detail.vue'),
+          name:'InvestDetail',
         },
         {
           path: '/app/home/admin/:lang',

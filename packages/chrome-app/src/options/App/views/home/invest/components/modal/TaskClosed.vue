@@ -6,7 +6,7 @@
    </div>
    <div class="flex flex-col tip mt-1">
       <span>归档后，该投资时间目标无法再进行番茄专注投资，请确认该投资时间目标已达成。</span>
-      <span>如果未达成，可更改投资状态为关闭，将该项目放入规划中。</span>
+      <span>如果未达成，可更改投资状态为关闭。</span>
       <span>如果仍然想要归档，请确认归档。</span>
    </div>
   </div>

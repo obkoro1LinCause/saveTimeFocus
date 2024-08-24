@@ -43,17 +43,17 @@ export const  TaskStatusMap = {
 
 type MyFunc = (pars:any) => void;
 
-export type TTaskItem = {
+export type TConfigureMap = {
   label:string,
   filed:string | Array<string>,
-  formatter?:MyFunc
-  display?:MyFunc
+  formatter?:MyFunc;
+  display?:MyFunc;
   component?:Component | string,
   props?:any
 }
 export type  TTaskItemMap = {
-  components?:TTaskItem[],
-  options:TTaskItem[],  //子主项目公共字段处理器
+  components?:TConfigureMap[],
+  options:TConfigureMap[],  //子主项目公共字段处理器
   title:string,
   source:any  //数据源
 }
@@ -67,3 +67,4 @@ export type TTaskMap = {
 
 export type TTaskList = TTaskMap[];
 
+export type TConfigures = TConfigureMap[];
