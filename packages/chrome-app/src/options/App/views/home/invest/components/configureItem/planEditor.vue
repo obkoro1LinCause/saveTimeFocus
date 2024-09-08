@@ -24,11 +24,13 @@
         <a-form :model="formData">
           <a-form-item name="planType">
             <a-select 
+              @change="onChange"
               v-model:value="formData.planType"  
               :options="planMapTypes?.map(type => ({ value: type }))">
             </a-select>
             <a-form-item name="planTime" class="mt-4">
               <a-select
+                @change="onChange"
                 v-model:value="formData.planTime"
                 :options="planMapTimes?.map(time => ({ value: time,label:`专注${time}小时` }))">
               </a-select>
@@ -43,13 +45,18 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, onMounted, watch, computed } from "vue";
+import { ref, defineProps, onMounted, watch, computed, PropType } from "vue";
+import { TItem } from '../item/item.type';
 
 const props = defineProps({
   source: {
     type: Object,
     default: () => ({}),
   },
+  type:{
+    type:String as PropType<TItem>,
+    default:'',
+  }
 });
 
 const formData = ref({
@@ -80,4 +87,9 @@ const planMapTimes = computed(() => {
 });
 
 // 通讯回显设计，根据不同状态
+const onChange = ()=>{
+  props.source.planType = formData.value.planType;
+};
+
+
 </script>

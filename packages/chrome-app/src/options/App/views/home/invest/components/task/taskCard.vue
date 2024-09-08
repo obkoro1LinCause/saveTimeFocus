@@ -55,7 +55,7 @@ import { EllipsisOutlined } from '@ant-design/icons-vue'
 import { TTaskItemMap,TaskStatusEnum,TaskStateMap,TaskStateEnum } from './type';
 import { taskAtions } from './constants';
 import Tooltip from '@/options/App/component/tooltip.vue';
-import TaskTag from './tag.vue';
+import TaskTag from './taskTag.vue';
 import emitter from '@/utils/emitter';
 import { ModalEventNameEnum } from '../modal/type';
 import { useRouter } from 'vue-router';

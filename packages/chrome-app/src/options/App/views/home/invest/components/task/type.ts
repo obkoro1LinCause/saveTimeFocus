@@ -44,10 +44,11 @@ export const  TaskStatusMap = {
 type MyFunc = (pars:any) => void;
 
 export type TConfigureMap = {
-  label:string,
+  label:string | MyFunc,
+  tip?:string,
   filed:string | Array<string>,
   formatter?:MyFunc;
-  display?:MyFunc;
+  display?:MyFunc | boolean;
   component?:Component | string,
   props?:any
 }

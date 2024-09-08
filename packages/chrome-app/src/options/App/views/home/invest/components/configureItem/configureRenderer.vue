@@ -16,7 +16,18 @@
             <span v-else-if="item.formatter">{{item?.formatter?.(source)}}</span>
             <span v-else>{{ source?.[item.filed] || '--'}}</span>
           </div>
-          <p>{{ item.label }}</p>
+          <a-tooltip v-if="item.tip" placement="bottom">
+            <template #title>
+              <div v-if="typeof item.tip === 'function'" v-html="item.tip()"></div>
+              <div v-else v-html="item.tip"></div>
+            </template>
+            <p v-if="typeof item.label === 'string'">{{ item.label }}</p>
+            <p v-else>{{ item.label(source) }}</p> 
+          </a-tooltip>
+          <template v-else>
+            <p v-if="typeof item.label === 'string'">{{ item.label }}</p>
+            <p v-else>{{ item.label(source) }}</p> 
+          </template>
         </div>
       </div>
     </div>
@@ -26,13 +37,14 @@
 <script setup lang="ts">
 import { ref, watch, defineProps, onMounted, PropType, computed} from "vue";
 import { EllipsisOutlined } from '@ant-design/icons-vue'
-import { type TConfigures } from './type';
-import { taskAtions } from './constants';
+import { type TConfigures } from '../task/type';
+import { taskAtions } from '../task/constants';
 import Tooltip from '@/options/App/component/tooltip.vue';
 
 
 const props = defineProps({
   title:String,
+  tip:String,
   config:{
     type:Array as PropType<TConfigures>,
     required:true,
@@ -40,16 +52,13 @@ const props = defineProps({
   taskId:Number,
   source:{
     type:Object,
+    default:()=>({}),
     required:true,
   },
   filed:{
     type:[String,Object],
   }
 });
-
-
-
-
 
 </script>
 
